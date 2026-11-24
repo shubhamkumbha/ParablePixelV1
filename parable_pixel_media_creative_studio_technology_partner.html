@@ -1,0 +1,2339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PARABLE PIXEL MEDIA — Creative Thinking. Practical Technology.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ==================== BRAND TOKENS & RESET ==================== */
+    :root {
+      --bg-primary: #0B0B0B;
+      --surface-card: #141414;
+      --surface-elevated: #181818;
+      --surface-deep: #0E0E10;
+      --text-primary: #FFFFFF;
+      --text-secondary: #A1A1AA;
+      --text-muted: #71717A;
+      --border-subtle: #262626;
+      --border-strong: #333333;
+      --accent-red: #E11D2E;
+      --accent-red-hover: #F42638;
+      --accent-light: #F87171;
+      --font-display: 'Syne', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      background-image:
+        radial-gradient(circle at 12% 85%, rgba(225, 29, 46, 0.085) 0%, transparent 44%),
+        radial-gradient(circle at 88% 12%, rgba(225, 29, 46, 0.05) 0%, transparent 40%);
+      background-attachment: fixed;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: inherit;
+    }
+
+    ::selection {
+      background-color: var(--accent-red);
+      color: #FFFFFF;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0B0B0B;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #262626;
+      border-radius: 999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-red);
+    }
+
+    /* ==================== LAYOUT & TYPOGRAPHY SYSTEM ==================== */
+    .container {
+      width: 100%;
+      max-width: 1340px;
+      margin: 0 auto;
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+    }
+    @media (min-width: 640px) {
+      .container {
+        padding-left: 2rem;
+        padding-right: 2rem;
+      }
+    }
+
+    .font-display { font-family: var(--font-display); }
+    .font-mono { font-family: var(--font-mono); }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 1.25rem;
+    }
+    .eyebrow-line {
+      width: 1.75rem;
+      height: 1.5px;
+      background-color: var(--accent-red);
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .display-xl {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(2.65rem, 6.8vw, 5.35rem);
+      line-height: 1.03;
+      letter-spacing: -0.03em;
+      color: #FFFFFF;
+    }
+
+    .display-lg {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(2rem, 4.4vw, 3.35rem);
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+      color: #FFFFFF;
+    }
+
+    .display-md {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+      line-height: 1.22;
+      letter-spacing: -0.015em;
+      color: #FFFFFF;
+    }
+
+    /* Buttons */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background-color: var(--accent-red);
+      color: #FFFFFF;
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 0.85rem 1.5rem;
+      border-radius: 6px;
+      transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 10px 25px -8px rgba(225, 29, 46, 0.55);
+    }
+    .btn-primary:hover {
+      background-color: var(--accent-red-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 14px 30px -6px rgba(225, 29, 46, 0.65);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background-color: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-strong);
+      color: #FFFFFF;
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 0.85rem 1.5rem;
+      border-radius: 6px;
+      transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    }
+    .btn-secondary:hover {
+      background-color: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.35);
+      transform: translateY(-1px);
+    }
+
+    /* Cards */
+    .studio-card {
+      background: linear-gradient(180deg, #161618 0%, #121214 100%);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      transition: border-color 0.3s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+    }
+    .studio-card:hover {
+      border-color: rgba(225, 29, 46, 0.5);
+      box-shadow: 0 20px 44px -16px rgba(225, 29, 46, 0.16);
+    }
+
+    /* ==================== SPLASH SCREEN PRELOADER ==================== */
+    #splash-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background-color: #0B0B0B;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.45s ease, visibility 0.45s ease;
+    }
+    #splash-screen.splash-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    @keyframes ribbonDraw {
+      0% { stroke-dashoffset: 320; opacity: 0.2; }
+      100% { stroke-dashoffset: 0; opacity: 1; }
+    }
+    @keyframes arrowThrust {
+      0% { opacity: 0; transform: translate(-12px, 12px) scale(0.82); }
+      100% { opacity: 1; transform: translate(0, 0) scale(1); }
+    }
+    @keyframes pixelPop {
+      0% { opacity: 0; transform: scale(0); }
+      75% { transform: scale(1.16); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    @keyframes progressLoad {
+      0% { width: 0%; }
+      100% { width: 100%; }
+    }
+
+    .splash-ribbon {
+      stroke-dasharray: 320;
+      stroke-dashoffset: 320;
+      animation: ribbonDraw 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .splash-arrow {
+      opacity: 0;
+      animation: arrowThrust 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.32s forwards;
+    }
+    .splash-pixel-1 {
+      opacity: 0;
+      transform-origin: center;
+      animation: pixelPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.52s forwards;
+    }
+    .splash-pixel-2 {
+      opacity: 0;
+      transform-origin: center;
+      animation: pixelPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.62s forwards;
+    }
+    .splash-pixel-3 {
+      opacity: 0;
+      transform-origin: center;
+      animation: pixelPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.72s forwards;
+    }
+    .splash-bar-track {
+      width: 192px;
+      height: 4px;
+      background: #1F1F23;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 1.5rem;
+    }
+    .splash-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #991B1B 0%, #E11D2E 60%, #F87171 100%);
+      border-radius: 999px;
+      animation: progressLoad 1.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    /* ==================== STICKY NAVBAR ==================== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background-color: rgba(11, 11, 11, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .header-inner {
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand-lockup {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+    .brand-divider {
+      width: 1px;
+      height: 28px;
+      background-color: var(--border-strong);
+    }
+    .brand-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 0.875rem;
+      letter-spacing: 0.14em;
+      color: #FFFFFF;
+      line-height: 1;
+    }
+    .brand-sub-row {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin-top: 0.3rem;
+    }
+    .brand-sub {
+      font-family: var(--font-mono);
+      font-size: 0.5625rem;
+      letter-spacing: 0.38em;
+      color: var(--text-secondary);
+      line-height: 1;
+    }
+    .brand-sub-bar {
+      width: 24px;
+      height: 2px;
+      background-color: var(--accent-red);
+      border-radius: 2px;
+    }
+
+    .desktop-nav {
+      display: none;
+      align-items: center;
+      gap: 1.65rem;
+    }
+    @media (min-width: 1024px) {
+      .desktop-nav { display: flex; }
+    }
+
+    .nav-item {
+      position: relative;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      padding: 0.45rem 0;
+      transition: color 0.2s ease;
+    }
+    .nav-item:hover,
+    .nav-item.active {
+      color: #FFFFFF;
+    }
+    .nav-item::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -2px;
+      height: 2px;
+      background-color: var(--accent-red);
+      border-radius: 2px;
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform 0.25s ease;
+    }
+    .nav-item.active::after {
+      transform: scaleX(1);
+    }
+
+    .mobile-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border-strong);
+      border-radius: 6px;
+      color: #FFFFFF;
+    }
+    @media (min-width: 1024px) {
+      .mobile-toggle { display: none; }
+    }
+
+    .mobile-drawer {
+      display: none;
+      background-color: #0E0E10;
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 1.25rem 1.5rem 1.75rem;
+    }
+    .mobile-drawer.open {
+      display: block;
+    }
+    .mobile-drawer a {
+      display: block;
+      padding: 0.65rem 0;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    .mobile-drawer a.active {
+      color: #FFFFFF;
+    }
+
+    /* ==================== MARQUEE TICKER ==================== */
+    @keyframes marqueeAnim {
+      0% { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(-50%, 0, 0); }
+    }
+    .marquee-strip {
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      background-color: rgba(14, 14, 16, 0.85);
+      padding: 1.35rem 0;
+      overflow: hidden;
+      user-select: none;
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      align-items: center;
+      animation: marqueeAnim 32s linear infinite;
+    }
+    .marquee-strip:hover .marquee-track {
+      animation-play-state: paused;
+    }
+    .marquee-word {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+      color: rgba(255, 255, 255, 0.28);
+      margin: 0 1.5rem;
+      letter-spacing: -0.01em;
+    }
+    .marquee-dot {
+      color: var(--accent-red);
+      font-size: 1.1rem;
+    }
+
+    /* ==================== SCROLL REVEAL & PAGE TRANSITION ==================== */
+    @keyframes pageFade {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .page-enter {
+      animation: pageFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .reveal-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-up.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .delay-1 { transition-delay: 80ms; }
+    .delay-2 { transition-delay: 160ms; }
+    .delay-3 { transition-delay: 240ms; }
+
+    /* ==================== GRID & SECTION HELPERS ==================== */
+    .section-pad {
+      padding-top: 5.5rem;
+      padding-bottom: 5.5rem;
+    }
+    @media (min-width: 768px) {
+      .section-pad {
+        padding-top: 7.5rem;
+        padding-bottom: 7.5rem;
+      }
+    }
+    .border-t-subtle {
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    @media (min-width: 900px) {
+      .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    @media (min-width: 768px) {
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1080px) {
+      .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    @media (min-width: 640px) {
+      .grid-4 { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1024px) {
+      .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    /* ==================== INTERACTIVE DASHBOARD MOCKUP STYLES ==================== */
+    .ui-window {
+      background-color: #0D0D10;
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 1.15rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+    }
+    .ui-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 0.75rem;
+      margin-bottom: 0.9rem;
+      border-bottom: 1px solid #1E1E22;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+    }
+    .ui-dots {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .ui-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #2C2C32;
+    }
+    .ui-dot.red { background: var(--accent-red); }
+    .ui-kpi-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.6rem;
+      margin-bottom: 0.9rem;
+    }
+    .ui-kpi {
+      background: #141418;
+      border: 1px solid #222227;
+      border-radius: 6px;
+      padding: 0.65rem 0.7rem;
+    }
+    .ui-kpi-label {
+      font-size: 0.56rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.06em;
+    }
+    .ui-kpi-val {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-top: 0.25rem;
+    }
+    .ui-kpi-val.red { color: var(--accent-light); }
+    .ui-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+    .ui-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0.48rem 0.65rem;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      font-size: 0.68rem;
+    }
+    .tag-green { color: #34D399; }
+    .tag-red { color: #F87171; }
+    .tag-amber { color: #FBBF24; }
+    .tag-muted { color: #A1A1AA; }
+
+    /* ==================== FORM CONTROLS ==================== */
+    .form-label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 0.55rem;
+    }
+    .form-input {
+      width: 100%;
+      background-color: #0B0B0D;
+      border: 1px solid var(--border-strong);
+      border-radius: 6px;
+      padding: 0.8rem 0.95rem;
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      color: #FFFFFF;
+      transition: border-color 0.2s ease;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--accent-red);
+    }
+
+    /* ==================== MODAL & TOAST ==================== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(0, 0, 0, 0.82);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+    }
+    .modal-backdrop.open {
+      display: flex;
+    }
+    .modal-panel {
+      width: 100%;
+      max-width: 760px;
+      max-height: 88vh;
+      background: #141414;
+      border: 1px solid var(--border-strong);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
+    }
+    .modal-head {
+      padding: 1rem 1.5rem;
+      background: #0E0E10;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .modal-body {
+      padding: 1.75rem;
+      overflow-y: auto;
+    }
+
+    #toast-banner {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 120;
+      max-width: 360px;
+      background: #181818;
+      border: 1px solid var(--accent-red);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.75);
+      display: none;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+    #toast-banner.show {
+      display: flex;
+    }
+
+    /* ==================== FOOTER ==================== */
+    .site-footer {
+      position: relative;
+      background-color: #09090B;
+      border-top: 1px solid var(--border-subtle);
+      overflow: hidden;
+    }
+    .footer-glow {
+      position: absolute;
+      bottom: -110px;
+      left: -110px;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(225, 29, 46, 0.14) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      padding-top: 4rem;
+      padding-bottom: 3.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    @media (min-width: 768px) {
+      .footer-grid { grid-template-columns: 2fr 1fr 1fr 1.3fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== SPLASH SCREEN PRELOADER ==================== -->
+  <div id="splash-screen" role="status" aria-label="Loading Parable Pixel Media">
+    <svg width="96" height="96" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="spGradP" x1="25" y1="25" x2="95" y2="105" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#FFFFFF" />
+          <stop offset="55%" stop-color="#D4D4D8" />
+          <stop offset="100%" stop-color="#52525B" />
+        </linearGradient>
+        <linearGradient id="spGradArr" x1="24" y1="96" x2="78" y2="48" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#27272A" />
+          <stop offset="48%" stop-color="#B91C1C" />
+          <stop offset="100%" stop-color="#E11D2E" />
+        </linearGradient>
+      </defs>
+      <!-- Top-left Pixel Squares -->
+      <rect class="splash-pixel-1" x="28" y="14" width="12" height="12" rx="1.5" fill="#FFFFFF" />
+      <rect class="splash-pixel-2" x="14" y="29" width="10" height="10" rx="1.5" fill="#A1A1AA" />
+      <rect class="splash-pixel-3" x="28" y="29" width="14" height="14" rx="1.5" fill="#FFFFFF" />
+      <!-- Outer P Ribbon -->
+      <path class="splash-ribbon"
+        d="M46 29H70C87.6731 29 102 42.8792 102 60C102 77.1208 87.6731 91 70 91H52C44 91 39 95.5 39 103V108H25V98C25 83.5 35.5 76 51 76H69C78.9411 76 87 68.8366 87 60C87 51.1634 78.9411 44 69 44H46V29Z"
+        fill="url(#spGradP)" stroke="#FFFFFF" stroke-width="1.2" />
+      <!-- Piercing Crimson Arrow -->
+      <g class="splash-arrow">
+        <path d="M25 96C27 77 41 64 63 58L59 49L80 54L68 72L65 64C47 70 38 80 38 97L25 96Z" fill="url(#spGradArr)" />
+      </g>
+    </svg>
+
+    <div style="text-align:center; margin-top:1.25rem;">
+      <div class="brand-title" style="font-size:0.95rem; letter-spacing:0.22em;">PARABLE PIXEL</div>
+      <div class="brand-sub-row" style="justify-content:center; margin-top:0.4rem;">
+        <span class="brand-sub">MEDIA</span>
+        <span class="brand-sub-bar" style="width:32px;"></span>
+      </div>
+    </div>
+
+    <div class="splash-bar-track">
+      <div class="splash-bar-fill"></div>
+    </div>
+  </div>
+
+  <!-- ==================== STICKY NAVBAR ==================== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <!-- Brand Logo -->
+      <a href="#home" data-route="home" class="brand-lockup">
+        <svg width="36" height="36" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="navP" x1="25" y1="25" x2="95" y2="105" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#FFFFFF" />
+              <stop offset="60%" stop-color="#D4D4D8" />
+              <stop offset="100%" stop-color="#71717A" />
+            </linearGradient>
+            <linearGradient id="navArr" x1="24" y1="96" x2="78" y2="48" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#3F3F46" />
+              <stop offset="45%" stop-color="#DC2626" />
+              <stop offset="100%" stop-color="#E11D2E" />
+            </linearGradient>
+          </defs>
+          <rect x="28" y="14" width="12" height="12" rx="1.5" fill="#FFFFFF" />
+          <rect x="14" y="29" width="10" height="10" rx="1.5" fill="#A1A1AA" />
+          <rect x="28" y="29" width="14" height="14" rx="1.5" fill="#FFFFFF" />
+          <path d="M46 29H70C87.6731 29 102 42.8792 102 60C102 77.1208 87.6731 91 70 91H52C44 91 39 95.5 39 103V108H25V98C25 83.5 35.5 76 51 76H69C78.9411 76 87 68.8366 87 60C87 51.1634 78.9411 44 69 44H46V29Z" fill="url(#navP)" />
+          <path d="M25 96C27 77 41 64 63 58L59 49L80 54L68 72L65 64C47 70 38 80 38 97L25 96Z" fill="url(#navArr)" />
+        </svg>
+        <span class="brand-divider"></span>
+        <div>
+          <div class="brand-title">PARABLE PIXEL</div>
+          <div class="brand-sub-row">
+            <span class="brand-sub">MEDIA</span>
+            <span class="brand-sub-bar"></span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="desktop-nav" aria-label="Primary">
+        <a href="#home" data-route="home" class="nav-item active">Home</a>
+        <a href="#services" data-route="services" class="nav-item">Services</a>
+        <a href="#creative-studio" data-route="creative-studio" class="nav-item">Creative Studio</a>
+        <a href="#tech-solutions" data-route="tech-solutions" class="nav-item">Tech Solutions</a>
+        <a href="#our-work" data-route="our-work" class="nav-item">Our Work</a>
+        <a href="#about" data-route="about" class="nav-item">About</a>
+        <a href="#contact" data-route="contact" class="nav-item">Contact</a>
+      </nav>
+
+      <!-- Right CTA + Mobile Button -->
+      <div style="display:flex; align-items:center; gap:0.75rem;">
+        <a href="#contact" data-route="contact" class="btn-primary" style="padding:0.65rem 1.15rem; font-size:0.8125rem;">
+          <span>Start a Project</span>
+          <span>↗</span>
+        </a>
+        <button id="mobile-menu-btn" class="mobile-toggle" aria-label="Toggle Menu">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-drawer" class="mobile-drawer">
+      <a href="#home" data-route="home" class="mobile-nav-item active">Home</a>
+      <a href="#services" data-route="services" class="mobile-nav-item">Services</a>
+      <a href="#creative-studio" data-route="creative-studio" class="mobile-nav-item">Creative Studio</a>
+      <a href="#tech-solutions" data-route="tech-solutions" class="mobile-nav-item">Tech Solutions</a>
+      <a href="#our-work" data-route="our-work" class="mobile-nav-item">Our Work</a>
+      <a href="#about" data-route="about" class="mobile-nav-item">About</a>
+      <a href="#contact" data-route="contact" class="mobile-nav-item">Contact</a>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN DYNAMIC PAGE VIEW ==================== -->
+  <main id="app-root" style="min-height:80vh;"></main>
+
+  <!-- ==================== GLOBAL FOOTER ==================== -->
+  <footer class="site-footer">
+    <div class="footer-glow"></div>
+    <div class="container" style="position:relative; z-index:2;">
+      <div class="footer-grid">
+        <!-- Brand Column -->
+        <div>
+          <a href="#home" data-route="home" class="brand-lockup" style="margin-bottom:1.1rem;">
+            <svg width="34" height="34" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="28" y="14" width="12" height="12" rx="1.5" fill="#FFFFFF" />
+              <rect x="14" y="29" width="10" height="10" rx="1.5" fill="#A1A1AA" />
+              <rect x="28" y="29" width="14" height="14" rx="1.5" fill="#FFFFFF" />
+              <path d="M46 29H70C87.6731 29 102 42.8792 102 60C102 77.1208 87.6731 91 70 91H52C44 91 39 95.5 39 103V108H25V98C25 83.5 35.5 76 51 76H69C78.9411 76 87 68.8366 87 60C87 51.1634 78.9411 44 69 44H46V29Z" fill="#E4E4E7" />
+              <path d="M25 96C27 77 41 64 63 58L59 49L80 54L68 72L65 64C47 70 38 80 38 97L25 96Z" fill="#E11D2E" />
+            </svg>
+            <span class="brand-divider"></span>
+            <div>
+              <div class="brand-title">PARABLE PIXEL</div>
+              <div class="brand-sub-row">
+                <span class="brand-sub">MEDIA</span>
+                <span class="brand-sub-bar"></span>
+              </div>
+            </div>
+          </a>
+          <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:1.25rem;">
+            Creative Thinking. Practical Technology.
+          </p>
+          <div class="font-mono" style="font-size:0.65rem; letter-spacing:0.18em; color:var(--text-muted); display:flex; flex-wrap:wrap; gap:0.75rem;">
+            <span>AMBERNATH</span><span>•</span>
+            <span>BADLAPUR</span><span>•</span>
+            <span>KALYAN</span><span>•</span>
+            <span>DOMBIVLI</span><span>•</span>
+            <span>ULHASNAGAR</span>
+          </div>
+        </div>
+
+        <!-- Explore Column -->
+        <div>
+          <h4 class="font-mono" style="font-size:0.6875rem; letter-spacing:0.2em; color:var(--text-muted); margin-bottom:1rem;">EXPLORE</h4>
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:0.65rem; font-size:0.875rem; color:var(--text-secondary);">
+            <li><a href="#home" data-route="home" style="transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--text-secondary)'">Home</a></li>
+            <li><a href="#our-work" data-route="our-work" style="transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--text-secondary)'">Our Work</a></li>
+            <li><a href="#about" data-route="about" style="transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--text-secondary)'">About</a></li>
+            <li><a href="#contact" data-route="contact" style="transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--text-secondary)'">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Services Column -->
+        <div>
+          <h4 class="font-mono" style="font-size:0.6875rem; letter-spacing:0.2em; color:var(--text-muted); margin-bottom:1rem;">SERVICES</h4>
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:0.65rem; font-size:0.875rem; color:var(--text-secondary);">
+            <li><a href="#creative-studio" data-route="creative-studio" style="transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--text-secondary)'">Creative Studio</a></li>
+            <li><a href="#services" data-route="services" style="transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--text-secondary)'">Digital Marketing</a></li>
+            <li><a href="#tech-solutions" data-route="tech-solutions" style="transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--text-secondary)'">Web Development</a></li>
+            <li><a href="#tech-solutions" data-route="tech-solutions" style="transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--text-secondary)'">Automation &amp; IT</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact Column -->
+        <div>
+          <h4 class="font-mono" style="font-size:0.6875rem; letter-spacing:0.2em; color:var(--text-muted); margin-bottom:1rem;">CONTACT</h4>
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:0.65rem; font-size:0.875rem; color:var(--text-secondary);">
+            <li><a href="mailto:hello@parablepixel.in">hello@parablepixel.in</a></li>
+            <li><a href="tel:+910000000000">+91 00000 00000</a></li>
+            <li>Maharashtra, India</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bottom Copyright -->
+      <div class="font-mono" style="padding:1.75rem 0; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:1rem; font-size:0.65rem; letter-spacing:0.18em; color:var(--text-muted);">
+        <span>© 2026 PARABLE PIXEL MEDIA. ALL RIGHTS RESERVED.</span>
+        <a href="#contact" data-route="contact" style="color:var(--text-secondary);">START A PROJECT ↗</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== CASE STUDY / REEL PREVIEW MODAL ==================== -->
+  <div id="case-modal" class="modal-backdrop" role="dialog" aria-modal="true">
+    <div class="modal-panel">
+      <div class="modal-head">
+        <div style="display:flex; align-items:center; gap:0.75rem;">
+          <span id="modal-tag" class="font-mono" style="font-size:0.65rem; letter-spacing:0.15em; padding:0.25rem 0.6rem; border-radius:4px; background:rgba(225,29,46,0.15); color:var(--accent-light); border:1px solid rgba(225,29,46,0.35);">CONCEPT / DEMO</span>
+          <span id="modal-sector" class="font-mono" style="font-size:0.65rem; letter-spacing:0.15em; color:var(--text-secondary);">INDUSTRY</span>
+        </div>
+        <button id="modal-close" style="width:32px; height:32px; border:1px solid var(--border-strong); border-radius:6px; color:var(--text-secondary);">✕</button>
+      </div>
+      <div id="modal-content" class="modal-body"></div>
+      <div style="padding:1rem 1.5rem; background:#0E0E10; border-top:1px solid var(--border-subtle); display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap;">
+        <span class="font-mono" style="font-size:0.65rem; letter-spacing:0.16em; color:var(--text-muted);">PARABLE PIXEL MEDIA · ARCHIVE</span>
+        <div style="display:flex; gap:0.75rem;">
+          <button id="modal-close-secondary" class="btn-secondary" style="padding:0.55rem 1rem; font-size:0.8rem;">Close</button>
+          <a href="#contact" data-route="contact" class="btn-primary" style="padding:0.55rem 1.1rem; font-size:0.8rem;">Discuss Similar Build ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== TOAST NOTIFICATION ==================== -->
+  <div id="toast-banner" role="alert">
+    <span style="width:9px; height:9px; border-radius:50%; background:var(--accent-red); margin-top:5px; flex-shrink:0;"></span>
+    <div style="font-size:0.8125rem;">
+      <div style="font-weight:700; color:#FFFFFF; margin-bottom:0.2rem;">Enquiry Sent</div>
+      <div style="color:var(--text-secondary);">Thank you! We have received your brief and will respond within 24 hours.</div>
+    </div>
+  </div>
+
+  <!-- ==================== APPLICATION SCRIPT ==================== -->
+  <script>
+    // 1. GUARANTEED FAIL-SAFE SPLASH PRELOADER DISMISSAL
+    (function initSplashFailSafe() {
+      let dismissed = false;
+      function hideSplash() {
+        if (dismissed) return;
+        dismissed = true;
+        const splash = document.getElementById('splash-screen');
+        if (splash) {
+          splash.classList.add('splash-hidden');
+          setTimeout(() => {
+            if (splash && splash.parentNode) splash.parentNode.removeChild(splash);
+          }, 500);
+        }
+      }
+      // Dismiss cleanly at 1.6s regardless of network assets
+      setTimeout(hideSplash, 1600);
+      // Secondary absolute fail-safe at 2.4s
+      setTimeout(hideSplash, 2400);
+    })();
+
+    // 2. SELF-CONTAINED SVG VISUAL COMPOSITIONS (ZERO BROKEN ASSETS)
+    function svgCinemaRigArt(label = '4K CINEMA PRODUCTION') {
+      return `
+        <svg viewBox="0 0 800 460" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" style="display:block; background:#0F0F12;">
+          <defs>
+            <radialGradient id="lensGlow" cx="55%" cy="48%" r="48%">
+              <stop offset="0%" stop-color="#E11D2E" stop-opacity="0.28"/>
+              <stop offset="55%" stop-color="#1F1F24" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#0B0B0D" stop-opacity="1"/>
+            </radialGradient>
+            <linearGradient id="metalGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#3F3F46"/>
+              <stop offset="50%" stop-color="#18181B"/>
+              <stop offset="100%" stop-color="#27272A"/>
+            </linearGradient>
+          </defs>
+          <rect width="800" height="460" fill="url(#lensGlow)"/>
+          <!-- Grid lines -->
+          <g stroke="#FFFFFF" stroke-opacity="0.04" stroke-width="1">
+            <line x1="200" y1="0" x2="200" y2="460"/><line x1="400" y1="0" x2="400" y2="460"/><line x1="600" y1="0" x2="600" y2="460"/>
+            <line x1="0" y1="153" x2="800" y2="153"/><line x1="0" y1="306" x2="800" y2="306"/>
+          </g>
+          <!-- Matte Box & Cinema Lens Barrel -->
+          <rect x="210" y="135" width="150" height="190" rx="10" fill="url(#metalGrad)" stroke="#3F3F46" stroke-width="2"/>
+          <rect x="360" y="155" width="110" height="150" rx="6" fill="#141417" stroke="#52525B" stroke-width="1.5"/>
+          <circle cx="515" cy="230" r="105" fill="#0D0D10" stroke="#3F3F46" stroke-width="3"/>
+          <circle cx="515" cy="230" r="82" fill="#141418" stroke="#E11D2E" stroke-opacity="0.55" stroke-width="2"/>
+          <circle cx="515" cy="230" r="56" fill="#09090B" stroke="#52525B" stroke-width="1.5"/>
+          <circle cx="515" cy="230" r="28" fill="#18181C" stroke="#F87171" stroke-opacity="0.4" stroke-width="1.5"/>
+          <circle cx="498" cy="212" r="10" fill="#FFFFFF" fill-opacity="0.14"/>
+          <!-- Viewfinder HUD Marks -->
+          <path d="M40 60V36H64M760 60V36H736M40 400V424H64M760 400V424H736" stroke="#E11D2E" stroke-width="2" fill="none"/>
+          <circle cx="64" cy="64" r="5" fill="#E11D2E"/>
+          <text x="80" y="69" fill="#A1A1AA" font-family="monospace" font-size="13" letter-spacing="3">REC · ${label}</text>
+        </svg>
+      `;
+    }
+
+    function svgEditorialArt(variant) {
+      const configs = {
+        cafe: {
+          accent: '#E11D2E',
+          sub: 'ESPRESSO & NOCTURNE · 35MM TUNGSTEN',
+          shapes: `
+            <circle cx="400" cy="230" r="120" fill="#18181B" stroke="#3F3F46" stroke-width="2"/>
+            <circle cx="400" cy="230" r="88" fill="#0E0E10" stroke="#E11D2E" stroke-opacity="0.6" stroke-width="2"/>
+            <circle cx="400" cy="230" r="58" fill="#271815"/>
+            <path d="M510 210H548C560 210 568 218 568 230C568 242 560 250 548 250H510" stroke="#71717A" stroke-width="12" fill="none"/>
+          `
+        },
+        architecture: {
+          accent: '#F87171',
+          sub: 'CONCRETE & LIGHT · ARCHITECTURAL STUDY',
+          shapes: `
+            <polygon points="180,460 330,90 470,90 470,460" fill="#1C1C20" stroke="#3F3F46" stroke-width="1.5"/>
+            <polygon points="470,90 610,160 610,460 470,460" fill="#121215" stroke="#27272A" stroke-width="1.5"/>
+            <line x1="330" y1="90" x2="330" y2="460" stroke="#E11D2E" stroke-opacity="0.65" stroke-width="2"/>
+            <g stroke="#3F3F46" stroke-width="1">
+              <line x1="250" y1="180" x2="450" y2="180"/><line x1="230" y1="240" x2="450" y2="240"/>
+              <line x1="210" y1="300" x2="450" y2="300"/><line x1="190" y1="360" x2="450" y2="360"/>
+            </g>
+          `
+        },
+        campaign: {
+          accent: '#E11D2E',
+          sub: 'META CAMPAIGN CREATIVE SYSTEM · 4:5 / 9:16',
+          shapes: `
+            <rect x="210" y="70" width="170" height="300" rx="14" fill="#16161A" stroke="#3F3F46" stroke-width="2"/>
+            <rect x="230" y="95" width="130" height="150" rx="6" fill="#231215" stroke="#E11D2E" stroke-opacity="0.5"/>
+            <rect x="230" y="262" width="90" height="10" rx="3" fill="#FFFFFF" fill-opacity="0.8"/>
+            <rect x="230" y="282" width="120" height="8" rx="3" fill="#71717A"/>
+            <rect x="230" y="315" width="130" height="32" rx="6" fill="#E11D2E"/>
+            <rect x="420" y="110" width="170" height="240" rx="14" fill="#121215" stroke="#27272A" stroke-width="2"/>
+            <circle cx="505" cy="200" r="46" fill="none" stroke="#E11D2E" stroke-width="3"/>
+            <path d="M490 202L502 214L524 188" stroke="#FFFFFF" stroke-width="3" fill="none"/>
+          `
+        },
+        portrait: {
+          accent: '#E11D2E',
+          sub: 'FOUNDER EDITORIAL PORTRAIT',
+          shapes: `
+            <circle cx="400" cy="175" r="56" fill="#27272A" stroke="#52525B" stroke-width="2"/>
+            <path d="M275 410C285 310 335 270 400 270C465 270 515 310 525 410" fill="#1E1E22" stroke="#3F3F46" stroke-width="2"/>
+            <line x1="120" y1="410" x2="680" y2="410" stroke="#E11D2E" stroke-opacity="0.5" stroke-width="2"/>
+          `
+        }
+      };
+      const c = configs[variant] || configs.cafe;
+      return `
+        <svg viewBox="0 0 800 460" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" style="display:block; background:#0F0F12;">
+          <defs>
+            <radialGradient id="bg_${variant}" cx="50%" cy="45%" r="60%">
+              <stop offset="0%" stop-color="#221417"/>
+              <stop offset="100%" stop-color="#0B0B0D"/>
+            </radialGradient>
+          </defs>
+          <rect width="800" height="460" fill="url(#bg_${variant})"/>
+          ${c.shapes}
+          <text x="36" y="425" fill="#71717A" font-family="monospace" font-size="12" letter-spacing="2.5">${c.sub}</text>
+        </svg>
+      `;
+    }
+
+    // 3. INTERACTIVE DASHBOARD UI MOCKUP GENERATORS
+    function renderAuraStayUI() {
+      return `
+        <div class="ui-window">
+          <div class="ui-topbar">
+            <div class="ui-dots">
+              <span class="ui-dot red"></span><span class="ui-dot"></span><span class="ui-dot"></span>
+              <span style="margin-left:6px;">app.parablepixel.demo/aurastay-os</span>
+            </div>
+            <span class="tag-green">● LIVE SYNC</span>
+          </div>
+          <div class="ui-kpi-row">
+            <div class="ui-kpi"><div class="ui-kpi-label">TOTAL SKUS</div><div class="ui-kpi-val">1,240</div></div>
+            <div class="ui-kpi"><div class="ui-kpi-label">LOW STOCK</div><div class="ui-kpi-val red">07</div></div>
+            <div class="ui-kpi"><div class="ui-kpi-label">TRANSFERS</div><div class="ui-kpi-val">12</div></div>
+          </div>
+          <div class="ui-list">
+            <div class="ui-row"><span style="color:#fff;">Basmati Rice 25kg</span><span class="tag-muted">Kitchen</span><span class="tag-green">42 bags</span></div>
+            <div class="ui-row"><span style="color:#fff;">Cooking Oil 15L</span><span class="tag-muted">Kitchen</span><span class="tag-red">08 tins</span></div>
+            <div class="ui-row"><span style="color:#fff;">Linen Sets – Deluxe</span><span class="tag-muted">Property 2</span><span class="tag-muted">118 pcs</span></div>
+            <div class="ui-row"><span style="color:#fff;">Tea Premix 1kg</span><span class="tag-muted">Property 1</span><span class="tag-red">09 packs</span></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderSpectraFlowUI() {
+      return `
+        <div class="ui-window">
+          <div class="ui-topbar">
+            <div class="ui-dots">
+              <span class="ui-dot red"></span><span class="ui-dot"></span><span class="ui-dot"></span>
+              <span style="margin-left:6px;">app.parablepixel.demo/spectraflow</span>
+            </div>
+            <span class="tag-red">OPTICAL ERP</span>
+          </div>
+          <div class="ui-kpi-row">
+            <div class="ui-kpi"><div class="ui-kpi-label">PATIENTS</div><div class="ui-kpi-val">1,420</div></div>
+            <div class="ui-kpi"><div class="ui-kpi-label">LAB OPEN</div><div class="ui-kpi-val">18</div></div>
+            <div class="ui-kpi"><div class="ui-kpi-label">FOLLOW-UPS</div><div class="ui-kpi-val red">26</div></div>
+          </div>
+          <div class="ui-list">
+            <div class="ui-row"><span style="color:#fff;">R. Sharma – Progressive</span><span class="tag-green">Ready</span></div>
+            <div class="ui-row"><span style="color:#fff;">A. Patel – Single Vision</span><span class="tag-amber">In Lab</span></div>
+            <div class="ui-row"><span style="color:#fff;">M. Khan – Bifocal Frame</span><span class="tag-muted">Billed</span></div>
+            <div class="ui-row"><span style="color:#fff;">S. Nair – Contact Lenses</span><span class="tag-red">Follow-up</span></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderPrimePlotUI() {
+      return `
+        <div class="ui-window">
+          <div class="ui-topbar">
+            <div class="ui-dots">
+              <span class="ui-dot red"></span><span class="ui-dot"></span><span class="ui-dot"></span>
+              <span style="margin-left:6px;">app.parablepixel.demo/primeplot</span>
+            </div>
+            <span class="tag-green">SITE LEDGER</span>
+          </div>
+          <div class="ui-kpi-row">
+            <div class="ui-kpi"><div class="ui-kpi-label">ACTIVE SITES</div><div class="ui-kpi-val">03</div></div>
+            <div class="ui-kpi"><div class="ui-kpi-label">VENDOR BILLS</div><div class="ui-kpi-val">14</div></div>
+            <div class="ui-kpi"><div class="ui-kpi-label">OUTFLOW</div><div class="ui-kpi-val">₹38.6L</div></div>
+          </div>
+          <div class="ui-list">
+            <div class="ui-row"><span style="color:#fff;">Wing A Slab – Stage 4</span><span class="tag-green">Paid</span></div>
+            <div class="ui-row"><span style="color:#fff;">Cement 450 bags</span><span class="tag-red">Pending</span></div>
+            <div class="ui-row"><span style="color:#fff;">Electrical – Floor 3</span><span class="tag-amber">In Progress</span></div>
+            <div class="ui-row"><span style="color:#fff;">Lift Advance – Kone</span><span class="tag-muted">Due 22 Aug</span></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderTableCraftUI() {
+      return `
+        <div class="ui-window">
+          <div class="ui-topbar">
+            <div class="ui-dots">
+              <span class="ui-dot red"></span><span class="ui-dot"></span><span class="ui-dot"></span>
+              <span style="margin-left:6px;">app.parablepixel.demo/tablecraft</span>
+            </div>
+            <span class="tag-green">QR MENU LIVE</span>
+          </div>
+          <div class="ui-kpi-row">
+            <div class="ui-kpi"><div class="ui-kpi-label">MENU ITEMS</div><div class="ui-kpi-val">86</div></div>
+            <div class="ui-kpi"><div class="ui-kpi-label">CATEGORIES</div><div class="ui-kpi-val">09</div></div>
+            <div class="ui-kpi"><div class="ui-kpi-label">LOAD TIME</div><div class="ui-kpi-val">&lt; 2s</div></div>
+          </div>
+          <div class="ui-list">
+            <div class="ui-row"><span style="color:#fff;">Truffle Parmesan Fries</span><span class="tag-green">₹240</span></div>
+            <div class="ui-row"><span style="color:#fff;">Paneer Tikka Skewers</span><span class="tag-green">₹320</span></div>
+            <div class="ui-row"><span style="color:#fff;">Wood-Fired Margherita</span><span class="tag-green">₹410</span></div>
+            <div class="ui-row"><span style="color:#fff;">Cold Brew Tonic</span><span class="tag-red">Sold Out</span></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderBusinessWebUI() {
+      return `
+        <div class="ui-window">
+          <div class="ui-topbar">
+            <div class="ui-dots">
+              <span class="ui-dot red"></span><span class="ui-dot"></span><span class="ui-dot"></span>
+              <span style="margin-left:6px;">app.parablepixel.demo/web-concepts</span>
+            </div>
+            <span class="tag-green">99 LIGHTHOUSE</span>
+          </div>
+          <div class="ui-kpi-row">
+            <div class="ui-kpi"><div class="ui-kpi-label">TEMPLATES</div><div class="ui-kpi-val">12</div></div>
+            <div class="ui-kpi"><div class="ui-kpi-label">WEIGHT</div><div class="ui-kpi-val">&lt; 1MB</div></div>
+            <div class="ui-kpi"><div class="ui-kpi-label">MOBILE</div><div class="ui-kpi-val">100%</div></div>
+          </div>
+          <div class="ui-list">
+            <div class="ui-row"><span style="color:#fff;">Hero – Restaurant Concept</span><span class="tag-green">Shipped</span></div>
+            <div class="ui-row"><span style="color:#fff;">Interactive Menu v2</span><span class="tag-green">Shipped</span></div>
+            <div class="ui-row"><span style="color:#fff;">Clinic Appointment Flow</span><span class="tag-amber">In Review</span></div>
+            <div class="ui-row"><span style="color:#fff;">Retail Catalogue Grid</span><span class="tag-green">Shipped</span></div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 4. COMPLETE PORTFOLIO DATA STORE
+    const PROJECTS = [
+      {
+        id: 'aurastay',
+        title: 'AuraStay OS',
+        badge: 'CONCEPT / DEMO',
+        industry: 'HOTELS & HOSPITALITY',
+        subtitle: 'MULTI-PROPERTY INVENTORY MANAGEMENT',
+        homeGroup: 'TECHNOLOGY',
+        workTags: ['SOFTWARE', 'AUTOMATION'],
+        kind: 'ui',
+        renderUI: renderAuraStayUI,
+        summary: 'Central godown inventory, inter-property stock transfers and daily kitchen consumption across every property — unified into one fast owner dashboard.',
+        bullets: [
+          'Central godown ledger with real-time quantities',
+          'Property-wise stock and consumption logs',
+          'Transfer requests with owner approval trail',
+          'Automated low-stock alerts and reorder thresholds'
+        ]
+      },
+      {
+        id: 'spectraflow',
+        title: 'SpectraFlow',
+        badge: 'CONCEPT / DEMO',
+        industry: 'RETAIL · OPTICAL',
+        subtitle: 'OPTICAL SHOP ERP & BILLING',
+        homeGroup: 'TECHNOLOGY',
+        workTags: ['SOFTWARE', 'AUTOMATION'],
+        kind: 'ui',
+        renderUI: renderSpectraFlowUI,
+        summary: 'Prescriptions, GST billing, lab job tracking and automated WhatsApp follow-up reminders tailored for modern optical retail stores.',
+        bullets: [
+          'Customer records with complete prescription history',
+          'Instant GST billing with print and WhatsApp share',
+          'Frame, lens and contact-lens inventory tracking',
+          'Lab job sheet with live order status updates'
+        ]
+      },
+      {
+        id: 'primeplot',
+        title: 'PrimePlot',
+        badge: 'CONCEPT / DEMO',
+        industry: 'REAL ESTATE & CONSTRUCTION',
+        subtitle: 'REAL ESTATE PROJECT MANAGEMENT',
+        homeGroup: 'TECHNOLOGY',
+        workTags: ['SOFTWARE'],
+        kind: 'ui',
+        renderUI: renderPrimePlotUI,
+        summary: 'Investments, contractor stage payouts, material procurement and supplier ledgers tracked per site so developers always see true project outflow.',
+        bullets: [
+          'Project-wise investment and expense ledger',
+          'Contractor milestone and payment tracking',
+          'Material procurement with supplier accounts',
+          'Pending vendor payment ageing dashboard'
+        ]
+      },
+      {
+        id: 'tablecraft',
+        title: 'TableCraft',
+        badge: 'CONCEPT / DEMO',
+        industry: 'RESTAURANTS & CAFÉS',
+        subtitle: 'QR DIGITAL MENU & ORDERING',
+        homeGroup: 'TECHNOLOGY',
+        workTags: ['WEB DEVELOPMENT', 'AUTOMATION'],
+        kind: 'ui',
+        renderUI: renderTableCraftUI,
+        summary: 'A fast mobile menu guests open in under 2 seconds by scanning a table QR code — zero app install required and instant out-of-stock toggles for staff.',
+        bullets: [
+          'Instant QR code generation per table or counter',
+          'Photo-rich menu with smart dietary & category filters',
+          'One-tap out-of-stock toggle from staff phone',
+          'Multi-language ready menu architecture'
+        ]
+      },
+      {
+        id: 'business-web',
+        title: 'Business Website Concepts',
+        badge: 'CONCEPT / DEMO',
+        industry: 'CROSS-INDUSTRY',
+        subtitle: 'RESPONSIVE WEBSITES FOR LOCAL BUSINESS',
+        homeGroup: 'TECHNOLOGY',
+        workTags: ['WEB DEVELOPMENT'],
+        kind: 'ui',
+        renderUI: renderBusinessWebUI,
+        summary: 'Custom, mobile-first websites for restaurants, clinics, coaching institutes and retailers built to rank locally and convert visitors into calls.',
+        bullets: [
+          'Bespoke visual architecture — zero recycled templates',
+          'Sub-second mobile load performance',
+          'Enquiry forms with instant owner alerts',
+          'Direct WhatsApp & click-to-call conversion flows'
+        ]
+      },
+      {
+        id: 'cafe-nocturne',
+        title: 'Café Nocturne',
+        badge: 'IN-HOUSE PROJECT',
+        industry: 'CAFÉ & HOSPITALITY',
+        subtitle: 'BRAND FILM & SOCIAL REELS',
+        homeGroup: 'CREATIVES',
+        workTags: ['VIDEO'],
+        kind: 'art',
+        isVideo: true,
+        renderArt: () => svgEditorialArt('cafe'),
+        summary: 'Moody tungsten-lit brand film and vertical social reels showcasing artisan espresso extraction, warm hospitality, and late-evening ambience.',
+        bullets: [
+          '4K 24fps cinema prime lens production',
+          'Custom film grain & DaVinci Resolve colour grade',
+          'Location foley and ambient sound design',
+          'Delivered in 16:9 master + 9:16 social cuts'
+        ]
+      },
+      {
+        id: 'espresso-study',
+        title: 'Espresso Study',
+        badge: 'IN-HOUSE PROJECT',
+        industry: 'CAFÉ & BEVERAGE',
+        subtitle: 'PRODUCT PHOTOGRAPHY SERIES',
+        homeGroup: 'CREATIVES',
+        workTags: ['PHOTOGRAPHY'],
+        kind: 'art',
+        isVideo: false,
+        renderArt: () => svgEditorialArt('cafe'),
+        summary: 'Editorial product and beverage photography utilizing directional key lighting, deep shadow contrast, and honest colour grading.',
+        bullets: [
+          'High-resolution print & menu masters',
+          'Social media and ad-ready crop ratios',
+          'Consistent dark-editorial brand look',
+          'Macro detail shots of textures and pour'
+        ]
+      },
+      {
+        id: 'concrete-light',
+        title: 'Concrete & Light',
+        badge: 'IN-HOUSE PROJECT',
+        industry: 'REAL ESTATE & SPACES',
+        subtitle: 'ARCHITECTURE PHOTOGRAPHY SERIES',
+        homeGroup: 'CREATIVES',
+        workTags: ['PHOTOGRAPHY'],
+        kind: 'art',
+        isVideo: false,
+        renderArt: () => svgEditorialArt('architecture'),
+        summary: 'Architectural lines, brutalist shadows and golden-hour reflections captured for real estate developments and commercial spaces.',
+        bullets: [
+          'Perspective-corrected architectural frames',
+          'Exterior & interior spatial storytelling',
+          'Brochure and digital launch campaign assets',
+          '72-hour post-production turnaround'
+        ]
+      },
+      {
+        id: 'skyline-kit',
+        title: 'Skyline Launch Kit',
+        badge: 'CONCEPT / DEMO',
+        industry: 'REAL ESTATE',
+        subtitle: 'CAMPAIGN CREATIVES & AD SET',
+        homeGroup: 'CREATIVES',
+        workTags: ['DIGITAL MARKETING'],
+        kind: 'art',
+        isVideo: false,
+        renderArt: () => svgEditorialArt('campaign'),
+        summary: 'Cohesive Meta ad creative system, feed carousel sequence, and story motion assets built from a unified architectural key visual.',
+        bullets: [
+          '1:1, 4:5 and 9:16 static & motion ad variants',
+          'High-contrast conversion copywriting',
+          'Paired with dedicated lead-capture landing page',
+          'Structured for A/B hook & creative testing'
+        ]
+      }
+    ];
+
+    // 5. SHARED COMPONENT BUILDERS
+    function buildMarquee(words) {
+      const items = words.map(w => `<span class="marquee-word">${w}</span><span class="marquee-dot">•</span>`).join('');
+      return `
+        <div class="marquee-strip">
+          <div class="marquee-track">
+            ${items}${items}
+          </div>
+        </div>
+      `;
+    }
+
+    function buildBottomCTA() {
+      return `
+        <section class="section-pad border-t-subtle" style="position:relative; overflow:hidden; text-align:center;">
+          <div style="position:absolute; inset:0; background:radial-gradient(circle at 50% 50%, rgba(225,29,46,0.09), transparent 60%); pointer-events:none;"></div>
+          <div class="container reveal-up" style="position:relative; z-index:2; max-width:760px;">
+            <div class="eyebrow" style="justify-content:center;">
+              <span class="eyebrow-line"></span>
+              <span>GET IN TOUCH</span>
+              <span class="eyebrow-line"></span>
+            </div>
+            <h2 class="display-lg">Have a project in mind?<br/>Let's make it happen.</h2>
+            <p style="color:var(--text-secondary); font-size:1rem; max-width:560px; margin:1.25rem auto 2.25rem;">
+              Whether you need standout content, a better website, or smarter business systems, we'd love to hear what you're working on.
+            </p>
+            <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:1rem;">
+              <a href="#contact" data-route="contact" class="btn-primary"><span>Start a Project</span><span>↗</span></a>
+              <a href="#contact" data-route="contact" class="btn-secondary"><span>Chat on WhatsApp</span></a>
+            </div>
+          </div>
+        </section>
+      `;
+    }
+
+    function buildProjectCard(p) {
+      const topVisual = p.kind === 'ui'
+        ? `<div style="padding:1.1rem; background:#0A0A0D; border-bottom:1px solid var(--border-subtle);">${p.renderUI()}</div>`
+        : `
+          <div style="position:relative; height:240px; overflow:hidden; border-bottom:1px solid var(--border-subtle);">
+            ${p.renderArt()}
+            <span class="font-mono" style="position:absolute; top:14px; left:14px; font-size:0.625rem; letter-spacing:0.15em; padding:0.25rem 0.6rem; border-radius:4px; background:rgba(11,11,11,0.85); border:1px solid var(--border-strong); color:#fff;">${p.badge}</span>
+            ${p.isVideo ? `
+              <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;">
+                <div style="width:48px; height:48px; border-radius:50%; background:rgba(225,29,46,0.9); display:flex; align-items:center; justify-content:center; color:#fff; box-shadow:0 8px 25px rgba(225,29,46,0.5);">▶</div>
+              </div>
+            ` : ''}
+          </div>
+        `;
+
+      return `
+        <article data-project-id="${p.id}" class="project-trigger studio-card reveal-up" style="cursor:pointer; overflow:hidden; display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            ${p.kind === 'ui' ? `
+              <div style="padding:0.85rem 1.15rem 0.25rem; background:#0A0A0D; display:flex; align-items:center; justify-content:space-between; gap:0.5rem;">
+                <span class="font-mono" style="font-size:0.6rem; letter-spacing:0.14em; padding:0.2rem 0.55rem; border-radius:4px; background:rgba(225,29,46,0.14); color:var(--accent-light); border:1px solid rgba(225,29,46,0.3);">● ${p.badge}</span>
+                <span class="font-mono" style="font-size:0.6rem; letter-spacing:0.14em; color:var(--text-muted);">${p.industry}</span>
+              </div>
+            ` : ''}
+            ${topVisual}
+          </div>
+          <div style="padding:1.4rem 1.5rem; display:flex; align-items:flex-end; justify-content:space-between; gap:1rem;">
+            <div>
+              <div class="font-mono" style="font-size:0.625rem; letter-spacing:0.16em; color:var(--text-secondary); margin-bottom:0.35rem;">${p.subtitle}</div>
+              <h3 class="display-md" style="font-size:1.25rem;">${p.title}</h3>
+            </div>
+            <span style="width:36px; height:36px; border-radius:6px; border:1px solid var(--border-strong); display:inline-flex; align-items:center; justify-content:center; color:var(--text-secondary); flex-shrink:0;">↗</span>
+          </div>
+        </article>
+      `;
+    }
+
+    // 6. ALL 7 PAGE TEMPLATES
+    const PAGE_VIEWS = {
+      home: () => `
+        <div class="page-enter">
+          <!-- HERO -->
+          <section style="position:relative; min-height:86vh; display:flex; flex-direction:column; justify-content:space-between; border-bottom:1px solid var(--border-subtle); overflow:hidden;">
+            <div style="position:absolute; inset:0; opacity:0.42; pointer-events:none;">
+              ${svgCinemaRigArt('PARABLE PIXEL STUDIO')}
+            </div>
+            <div style="position:absolute; inset:0; background:linear-gradient(90deg, #0B0B0B 38%, rgba(11,11,11,0.78) 72%, rgba(11,11,11,0.45) 100%); pointer-events:none;"></div>
+
+            <div class="container" style="position:relative; z-index:2; padding-top:5rem; padding-bottom:3rem; margin-top:auto; margin-bottom:auto;">
+              <div class="eyebrow reveal-up">
+                <span style="color:var(--accent-red); font-size:0.85rem;">✦</span>
+                <span>CREATIVE STUDIO + TECHNOLOGY PARTNER</span>
+              </div>
+              <h1 class="display-xl reveal-up delay-1" style="max-width:860px;">
+                We Create.<br/>
+                We Build.<br/>
+                We Elevate.
+              </h1>
+              <p class="reveal-up delay-2" style="color:var(--text-secondary); font-size:1.075rem; max-width:560px; margin-top:1.65rem;">
+                From compelling visual stories to intelligent digital solutions, we help ambitious businesses standout and move forward.
+              </p>
+              <div class="reveal-up delay-3" style="margin-top:2.25rem; display:flex; flex-wrap:wrap; gap:1rem;">
+                <a href="#contact" data-route="contact" class="btn-primary"><span>Start a Project</span><span>↗</span></a>
+                <a href="#our-work" data-route="our-work" class="btn-secondary"><span>See Our Work</span></a>
+              </div>
+            </div>
+
+            <div class="container font-mono" style="position:relative; z-index:2; padding-bottom:1.5rem; display:flex; justify-content:space-between; font-size:0.65rem; letter-spacing:0.2em; color:var(--text-muted);">
+              <span>MAHARASHTRA · INDIA</span>
+              <span>SCROLL ↓</span>
+              <span>EST. 2026</span>
+            </div>
+          </section>
+
+          <!-- MARQUEE -->
+          ${buildMarquee(['Web Platforms', 'Photography', 'Automation', 'Digital Marketing', 'Custom Software', 'Brand Films'])}
+
+          <!-- THE AGENCY -->
+          <section class="section-pad">
+            <div class="container">
+              <div class="reveal-up" style="max-width:880px; margin-bottom:3.5rem;">
+                <div class="eyebrow"><span class="eyebrow-line"></span><span>THE AGENCY</span></div>
+                <h2 class="display-md" style="font-size:clamp(1.6rem, 3.1vw, 2.55rem); line-height:1.25;">
+                  Great businesses need more than great content. They need a strong digital presence and the right technology behind it. We bring both together.
+                </h2>
+              </div>
+
+              <!-- SPLIT PILLAR CARDS -->
+              <div class="grid-2">
+                <!-- 01 / CREATIVE -->
+                <div class="studio-card reveal-up" style="overflow:hidden; display:flex; flex-direction:column; justify-content:space-between;">
+                  <div style="height:270px; border-bottom:1px solid var(--border-subtle);">
+                    ${svgCinemaRigArt('01 / CREATIVE PRODUCTION')}
+                  </div>
+                  <div style="padding:2rem;">
+                    <div class="font-mono" style="font-size:0.6875rem; letter-spacing:0.2em; color:var(--accent-light); margin-bottom:0.75rem;">01 / CREATIVE</div>
+                    <h3 class="display-md" style="margin-bottom:1.25rem;">Stories that capture attention and connect brands with people.</h3>
+                    <a href="#creative-studio" data-route="creative-studio" style="display:inline-flex; align-items:center; gap:0.5rem; font-size:0.9rem; font-weight:600; color:#FFFFFF;">
+                      <span>Enter the studio</span><span style="color:var(--accent-red);">↗</span>
+                    </a>
+                  </div>
+                </div>
+
+                <!-- 02 / TECHNOLOGY -->
+                <div class="studio-card reveal-up delay-1" style="overflow:hidden; display:flex; flex-direction:column; justify-content:space-between;">
+                  <div style="padding:1.35rem; background:#0A0A0D; border-bottom:1px solid var(--border-subtle);">
+                    ${renderAuraStayUI()}
+                  </div>
+                  <div style="padding:2rem;">
+                    <div class="font-mono" style="font-size:0.6875rem; letter-spacing:0.2em; color:var(--accent-light); margin-bottom:0.75rem;">02 / TECHNOLOGY</div>
+                    <h3 class="display-md" style="margin-bottom:1.25rem;">Websites, systems and automations that simplify everyday operations.</h3>
+                    <a href="#tech-solutions" data-route="tech-solutions" style="display:inline-flex; align-items:center; gap:0.5rem; font-size:0.9rem; font-weight:600; color:#FFFFFF;">
+                      <span>See the engineering</span><span style="color:var(--accent-red);">↗</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- OUR EXPERTISE (2x2 GRID) -->
+          <section class="section-pad border-t-subtle">
+            <div class="container">
+              <div class="reveal-up" style="margin-bottom:3rem;">
+                <div class="eyebrow"><span class="eyebrow-line"></span><span>OUR EXPERTISE</span></div>
+                <h2 class="display-lg">Everything your brand needs to move forward.</h2>
+              </div>
+
+              <div class="grid-2" style="gap:1.25rem;">
+                ${[
+                  { num: '01', title: 'Creative Studio', route: 'creative-studio', bullets: ['Reels & promotional videos', 'Photography', 'Video production & editing', 'Brand visuals & graphic design'] },
+                  { num: '02', title: 'Digital Marketing', route: 'services', bullets: ['Social media management', 'Content strategy', 'Meta advertising', 'Campaign planning & reporting'] },
+                  { num: '03', title: 'Web Development', route: 'tech-solutions', bullets: ['Business websites', 'Landing pages', 'E-commerce platforms', 'Restaurant & hotel websites'] },
+                  { num: '04', title: 'Automation & IT', route: 'tech-solutions', bullets: ['CRM systems', 'Billing & ERP software', 'Dashboards & WhatsApp workflows', 'Custom software & integrations'] }
+                ].map((item, idx) => `
+                  <div class="studio-card reveal-up delay-${idx % 2}" style="position:relative; padding:2.25rem; overflow:hidden;">
+                    <span class="font-display" style="position:absolute; top:0.75rem; right:1.5rem; font-size:4.5rem; font-weight:800; color:rgba(255,255,255,0.035); pointer-events:none;">${item.num}</span>
+                    <h3 class="display-md" style="margin-bottom:1.25rem;">${item.title}</h3>
+                    <ul style="list-style:none; display:flex; flex-direction:column; gap:0.65rem; margin-bottom:1.75rem; color:var(--text-secondary); font-size:0.925rem;">
+                      ${item.bullets.map(b => `<li style="display:flex; align-items:center; gap:0.65rem;"><span style="width:6px; height:2px; background:var(--accent-red);"></span><span>${b}</span></li>`).join('')}
+                    </ul>
+                    <a href="#${item.route}" data-route="${item.route}" class="font-mono" style="display:inline-flex; align-items:center; gap:0.5rem; font-size:0.7rem; letter-spacing:0.2em; color:#FFFFFF;">
+                      <span>EXPLORE</span><span style="color:var(--accent-red);">↗</span>
+                    </a>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </section>
+
+          <!-- FEATURED WORK -->
+          <section class="section-pad border-t-subtle">
+            <div class="container">
+              <div class="reveal-up" style="display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:1.5rem; margin-bottom:2.75rem;">
+                <div>
+                  <div class="eyebrow"><span class="eyebrow-line"></span><span>FEATURED WORK</span></div>
+                  <h2 class="display-lg">Selected Work. Real Ideas.<br/>Practical Solutions.</h2>
+                </div>
+                <div style="display:inline-flex; flex-wrap:wrap; gap:0.4rem; padding:0.35rem; background:#141414; border:1px solid var(--border-subtle); border-radius:8px;">
+                  <button data-home-filter="ALL" class="home-filter font-mono" style="padding:0.5rem 0.9rem; border-radius:6px; font-size:0.68rem; letter-spacing:0.15em; background:var(--accent-red); color:#fff;">ALL WORK</button>
+                  <button data-home-filter="CREATIVES" class="home-filter font-mono" style="padding:0.5rem 0.9rem; border-radius:6px; font-size:0.68rem; letter-spacing:0.15em; color:var(--text-secondary);">CREATIVES</button>
+                  <button data-home-filter="TECHNOLOGY" class="home-filter font-mono" style="padding:0.5rem 0.9rem; border-radius:6px; font-size:0.68rem; letter-spacing:0.15em; color:var(--text-secondary);">TECHNOLOGY</button>
+                </div>
+              </div>
+
+              <div id="home-featured-grid" class="grid-3"></div>
+
+              <div style="text-align:center; margin-top:2.75rem;">
+                <a href="#our-work" data-route="our-work" class="btn-secondary"><span>View Complete Portfolio</span><span>→</span></a>
+              </div>
+            </div>
+          </section>
+
+          <!-- THE DIFFERENCE SPLIT BANNER -->
+          <section class="section-pad border-t-subtle">
+            <div class="container">
+              <div class="eyebrow reveal-up"><span class="eyebrow-line"></span><span>THE DIFFERENCE</span></div>
+              <div class="grid-2">
+                <div class="studio-card reveal-up" style="overflow:hidden;">
+                  <div style="height:220px; border-bottom:1px solid var(--border-subtle);">${svgEditorialArt('cafe')}</div>
+                  <div style="padding:2rem;">
+                    <div class="font-mono" style="font-size:0.6875rem; letter-spacing:0.2em; color:var(--accent-light); margin-bottom:0.65rem;">THE STORYTELLERS</div>
+                    <h3 class="display-md" style="margin-bottom:1.1rem;">Cinematic production with an editorial eye.</h3>
+                    <a href="#creative-studio" data-route="creative-studio" style="font-size:0.875rem; font-weight:600; color:#fff;">Creative Studio <span style="color:var(--accent-red);">→</span></a>
+                  </div>
+                </div>
+                <div class="studio-card reveal-up delay-1" style="overflow:hidden;">
+                  <div style="height:220px; padding:1.5rem; background:#0B0B0E; border-bottom:1px solid var(--border-subtle); display:flex; align-items:center;">
+                    <div class="font-mono" style="width:100%; background:#131317; border:1px solid var(--border-subtle); border-radius:8px; padding:1.25rem; font-size:0.8rem; line-height:1.7;">
+                      <div style="color:var(--text-secondary);"><span style="color:var(--accent-light);">const</span> <span style="color:#fff;">Business</span> = <span style="color:#34D399;">simplify</span>(operations);</div>
+                      <div style="color:var(--text-muted);">// one studio, zero vendor handoffs</div>
+                      <div style="color:var(--text-secondary);"><span style="color:#60A5FA;">deploy</span>(website).<span style="color:var(--accent-light);">with</span>(localSEO);</div>
+                      <div style="color:var(--text-secondary);">whatsapp.<span style="color:#34D399;">notify</span>(owner, newLead);</div>
+                    </div>
+                  </div>
+                  <div style="padding:2rem;">
+                    <div class="font-mono" style="font-size:0.6875rem; letter-spacing:0.2em; color:var(--accent-light); margin-bottom:0.65rem;">THE ENGINEERS</div>
+                    <h3 class="display-md" style="margin-bottom:1.1rem;">Great systems simplify operations.</h3>
+                    <a href="#tech-solutions" data-route="tech-solutions" style="font-size:0.875rem; font-weight:600; color:#fff;">Technology Solutions <span style="color:var(--accent-red);">→</span></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- HOW WE WORK -->
+          <section class="section-pad border-t-subtle">
+            <div class="container">
+              <div class="reveal-up" style="margin-bottom:3rem;">
+                <div class="eyebrow"><span class="eyebrow-line"></span><span>HOW WE WORK</span></div>
+                <h2 class="display-lg">A clear path from first call to launch.</h2>
+              </div>
+              <div class="grid-4">
+                ${[
+                  { step: '01', title: 'Discover', text: 'We learn how you run — your business, your customers, and what "working" actually looks like for you.' },
+                  { step: '02', title: 'Strategise', text: 'A clear plan: what to create, what to build, in what order, and why it moves the needle.' },
+                  { step: '03', title: 'Create & Build', text: 'Shoots, edits, designs and code — crafted in-house, reviewed with you at every stage.' },
+                  { step: '04', title: 'Launch & Improve', text: 'We ship, measure honestly, and refine. Your presence keeps getting sharper.' }
+                ].map((s, i) => `
+                  <div class="reveal-up delay-${i % 4}" style="padding-top:1.5rem; border-top:1px solid ${i === 0 ? 'var(--accent-red)' : 'var(--border-strong)'};">
+                    <div class="font-mono" style="font-size:0.75rem; color:var(--accent-red); margin-bottom:0.85rem;">${s.step}</div>
+                    <h3 class="display-md" style="font-size:1.25rem; margin-bottom:0.65rem;">${s.title}</h3>
+                    <p style="color:var(--text-secondary); font-size:0.9rem;">${s.text}</p>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </section>
+
+          ${buildBottomCTA()}
+        </div>
+      `,
+
+      services: () => `
+        <div class="page-enter">
+          <section class="container section-pad" style="padding-bottom:3.5rem;">
+            <div class="eyebrow reveal-up"><span class="eyebrow-line"></span><span>SERVICES</span></div>
+            <h1 class="display-xl reveal-up delay-1" style="max-width:860px;">We Create.<br/>We Build.<br/>We Elevate.</h1>
+            <p class="reveal-up delay-2" style="color:var(--text-secondary); font-size:1.1rem; max-width:740px; margin-top:1.75rem;">
+              Most businesses hire an editor here, a freelancer there, a developer somewhere else. We carry the whole journey — story, presence and systems — so nothing gets lost between vendors.
+            </p>
+          </section>
+
+          ${buildMarquee(['Restaurants & Cafés', 'Hotels & Stays', 'Retail Stores', 'Real Estate', 'Clinics'])}
+
+          <section class="container section-pad" style="display:flex; flex-direction:column; gap:1.5rem;">
+            ${[
+              {
+                num: '01',
+                title: 'Creative Studio',
+                desc: 'Films, reels and photography that make people stop scrolling. Shot, directed and edited in-house with a consistent, editorial standard.',
+                route: 'creative-studio',
+                items: ['Brand films & promotional videos', 'Short-form reels for Instagram & YouTube', 'Product & business photography', 'Event & launch coverage', 'Editing, colour grade & sound design']
+              },
+              {
+                num: '02',
+                title: 'Digital Marketing',
+                desc: 'Content with a plan behind it. We build monthly content systems and targeted campaigns that keep your brand visible and your enquiries steady.',
+                route: 'contact',
+                items: ['Social media management', 'Content strategy & calendars', 'Meta (Instagram/Facebook) advertising', 'Campaign creative sets', 'Planning, posting & plain-English reporting']
+              },
+              {
+                num: '03',
+                title: 'Web Development',
+                desc: 'Fast, mobile-first websites built to generate calls and enquiries — not just to exist. Designed around your customers and your locality.',
+                route: 'tech-solutions',
+                items: ['Business websites', 'Landing pages for campaigns', 'E-commerce & catalogue platforms', 'Restaurant, hotel & clinic websites', 'Local SEO structure & metadata']
+              },
+              {
+                num: '04',
+                title: 'Automation & IT Solutions',
+                desc: 'Replace registers, scattered spreadsheets and manual follow-ups with clean software tailored to how your team actually works.',
+                route: 'tech-solutions',
+                items: ['CRM & billing systems', 'Inventory & operations software', 'Owner dashboards & reporting', 'WhatsApp enquiry workflows', 'Custom software & integrations']
+              }
+            ].map(s => `
+              <div class="studio-card reveal-up" style="position:relative; padding:2.5rem; overflow:hidden;">
+                <span class="font-display" style="position:absolute; bottom:0.5rem; left:2rem; font-size:5rem; font-weight:800; color:rgba(255,255,255,0.03); pointer-events:none;">${s.num}</span>
+                <div class="grid-2" style="align-items:start; position:relative; z-index:2;">
+                  <div>
+                    <h2 class="display-md" style="margin-bottom:0.85rem;">${s.title}</h2>
+                    <p style="color:var(--text-secondary); font-size:0.95rem; margin-bottom:1.5rem;">${s.desc}</p>
+                    <a href="#${s.route}" data-route="${s.route}" class="font-mono" style="font-size:0.7rem; letter-spacing:0.2em; color:#fff;">SEE THIS WORK <span style="color:var(--accent-red);">→</span></a>
+                  </div>
+                  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:0.85rem;">
+                    ${s.items.map(i => `<div style="display:flex; align-items:flex-start; gap:0.65rem; font-size:0.9rem; color:#E4E4E7;"><span style="width:6px; height:6px; background:var(--accent-red); margin-top:7px; flex-shrink:0;"></span><span>${i}</span></div>`).join('')}
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </section>
+
+          <section class="section-pad border-t-subtle">
+            <div class="container grid-2" style="align-items:center;">
+              <div class="reveal-up">
+                <div class="eyebrow"><span class="eyebrow-line"></span><span>WHY ONE TEAM</span></div>
+                <h2 class="display-lg">The handover problem, solved.</h2>
+                <p style="color:var(--text-secondary); font-size:0.98rem; margin-top:1.25rem;">
+                  When the same studio shoots your content and builds your systems, your brand look fits your website, your ads match your reels, and your enquiry form actually reaches you. One conversation, one standard, one bill.
+                </p>
+              </div>
+              <div class="studio-card reveal-up delay-1" style="padding:2.25rem; display:flex; flex-direction:column; gap:1.1rem;">
+                ${[
+                  'No vendor ping-pong between editor, designer and developer',
+                  'A consistent visual identity across every touchpoint',
+                  'Technology scoped around your real daily operations',
+                  'Honest timelines and plain-English communication'
+                ].map(pt => `<div style="display:flex; align-items:flex-start; gap:0.75rem; font-size:0.95rem;"><span style="width:7px; height:7px; background:var(--accent-red); margin-top:7px; flex-shrink:0;"></span><span>${pt}</span></div>`).join('')}
+              </div>
+            </div>
+          </section>
+
+          ${buildBottomCTA()}
+        </div>
+      `,
+
+      'creative-studio': () => `
+        <div class="page-enter">
+          <section style="position:relative; min-height:62vh; display:flex; align-items:flex-end; border-bottom:1px solid var(--border-subtle); overflow:hidden;">
+            <div style="position:absolute; inset:0; opacity:0.45;">${svgCinemaRigArt('FILM · PHOTO · CAMPAIGNS')}</div>
+            <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(11,11,11,0.35) 0%, #0B0B0B 95%);"></div>
+            <div class="container reveal-up" style="position:relative; z-index:2; padding-top:6rem; padding-bottom:4rem;">
+              <div class="eyebrow"><span class="eyebrow-line"></span><span style="color:var(--accent-light);">CREATIVE STUDIO · FILM · PHOTO · CAMPAIGNS</span></div>
+              <h1 class="display-lg" style="max-width:820px;">We create video, photography, and digital content that help brands express who they are.</h1>
+            </div>
+          </section>
+
+          ${buildMarquee(['Brand Films & Promotional Videos', 'Short-Form Reels', 'Product Photography', 'Campaign Creative Sets'])}
+
+          <!-- MOTION -->
+          <section class="container section-pad">
+            <div class="reveal-up" style="max-width:680px; margin-bottom:2.75rem;">
+              <div class="eyebrow"><span class="eyebrow-line"></span><span>MOTION</span></div>
+              <h2 class="display-lg">The video portfolio.</h2>
+              <p style="color:var(--text-secondary); margin-top:0.85rem;">
+                Brand films, reels and campaign cuts. Click any production reel card below to preview the master cut details.
+              </p>
+            </div>
+            <div class="grid-3">
+              ${[
+                { id: 'cafe-nocturne', tag: 'BRAND FILM · 01:45', title: 'Café Nocturne — Brand Film', art: 'cafe' },
+                { id: 'espresso-study', tag: 'SHORT-FORM REEL · 0:30', title: 'Espresso Study — Reel Cut', art: 'cafe' },
+                { id: 'concrete-light', tag: 'SHOWCASE REEL · 0:45', title: 'Concrete & Light — Architecture Reel', art: 'architecture' }
+              ].map((v, idx) => `
+                <div data-project-id="${v.id}" class="project-trigger studio-card reveal-up delay-${idx}" style="cursor:pointer; overflow:hidden;">
+                  <div style="position:relative; height:230px; border-bottom:1px solid var(--border-subtle);">
+                    ${svgEditorialArt(v.art)}
+                    <span class="font-mono" style="position:absolute; top:12px; left:12px; font-size:0.6rem; letter-spacing:0.15em; padding:0.25rem 0.55rem; border-radius:4px; background:rgba(11,11,11,0.85); color:var(--accent-light); border:1px solid rgba(225,29,46,0.35);">● IN-HOUSE PROJECT</span>
+                    <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;">
+                      <div style="width:48px; height:48px; border-radius:50%; background:rgba(225,29,46,0.92); display:flex; align-items:center; justify-content:center; color:#fff;">▶</div>
+                    </div>
+                    <span class="font-mono" style="position:absolute; bottom:10px; right:12px; font-size:0.6rem; letter-spacing:0.16em; color:rgba(255,255,255,0.75);">VIDEO SLOT READY</span>
+                  </div>
+                  <div style="padding:1.4rem;">
+                    <div class="font-mono" style="font-size:0.625rem; letter-spacing:0.16em; color:var(--text-secondary); margin-bottom:0.35rem;">${v.tag}</div>
+                    <h3 class="display-md" style="font-size:1.15rem;">${v.title}</h3>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </section>
+
+          <!-- STILLS -->
+          <section class="section-pad border-t-subtle">
+            <div class="container">
+              <div class="reveal-up" style="display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:1.5rem; margin-bottom:2.5rem;">
+                <div style="max-width:620px;">
+                  <div class="eyebrow"><span class="eyebrow-line"></span><span>STILLS</span></div>
+                  <h2 class="display-lg">Photography, treated deliberately.</h2>
+                  <p style="color:var(--text-secondary); margin-top:0.85rem;">Hard light, deep shadow, honest colour. Filter by studio discipline below.</p>
+                </div>
+                <div style="display:inline-flex; flex-wrap:wrap; gap:0.35rem; padding:0.35rem; background:#141414; border:1px solid var(--border-subtle); border-radius:8px;">
+                  ${['ALL', 'PRODUCT', 'BUSINESS & LIFESTYLE', 'SPACES'].map((tab, idx) => `
+                    <button data-stills-filter="${tab}" class="stills-filter font-mono" style="padding:0.45rem 0.85rem; border-radius:6px; font-size:0.65rem; letter-spacing:0.14em; ${idx === 0 ? 'background:var(--accent-red); color:#fff;' : 'color:var(--text-secondary);'}">${tab}</button>
+                  `).join('')}
+                </div>
+              </div>
+              <div id="stills-grid" class="grid-3"></div>
+            </div>
+          </section>
+
+          <!-- CAMPAIGNS -->
+          <section class="section-pad border-t-subtle">
+            <div class="container">
+              <div class="reveal-up" style="max-width:680px; margin-bottom:2.75rem;">
+                <div class="eyebrow"><span class="eyebrow-line"></span><span>CAMPAIGNS</span></div>
+                <h2 class="display-lg">Digital marketing deliverables.</h2>
+              </div>
+              <div class="grid-3">
+                ${[
+                  { cat: 'REAL ESTATE CAMPAIGN', title: 'Skyline Launch Kit', desc: 'Feed system, story sequence and Meta ad creatives built from one key visual.', art: 'architecture' },
+                  { cat: 'SOCIAL MEDIA MANAGEMENT', title: 'Café Content System', desc: 'A monthly calendar of reels, menu features and behind-the-counter stills.', art: 'cafe' },
+                  { cat: 'META ADVERTISING CREATIVES', title: 'Espresso Ad Set', desc: 'Static and motion ad variations in 1:1, 4:5 and 9:16 for paid campaigns.', art: 'campaign' }
+                ].map((c, i) => `
+                  <div class="studio-card reveal-up delay-${i}" style="overflow:hidden;">
+                    <div style="height:210px; border-bottom:1px solid var(--border-subtle);">${svgEditorialArt(c.art)}</div>
+                    <div style="padding:1.5rem;">
+                      <div class="font-mono" style="font-size:0.625rem; letter-spacing:0.16em; color:var(--accent-light); margin-bottom:0.45rem;">${c.cat}</div>
+                      <h3 class="display-md" style="font-size:1.2rem; margin-bottom:0.55rem;">${c.title}</h3>
+                      <p style="color:var(--text-secondary); font-size:0.875rem;">${c.desc}</p>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </section>
+
+          ${buildBottomCTA()}
+        </div>
+      `,
+
+      'tech-solutions': () => `
+        <div class="page-enter">
+          <section class="container section-pad">
+            <div class="grid-2" style="align-items:center; gap:3rem;">
+              <div class="reveal-up">
+                <div class="eyebrow"><span class="eyebrow-line"></span><span>TECHNOLOGY SOLUTIONS</span></div>
+                <h1 class="display-xl" style="font-size:clamp(2.4rem, 5vw, 4.1rem);">Intelligent Solutions.<br/>Simpler Operations.</h1>
+                <p style="color:var(--text-secondary); font-size:1.05rem; margin-top:1.35rem; max-width:520px;">
+                  We design and build websites, custom business systems, and automations that help companies work smarter.
+                </p>
+                <div style="margin-top:2rem; display:flex; flex-wrap:wrap; gap:1rem;">
+                  <a href="#contact" data-route="contact" class="btn-primary"><span>Discuss a System</span><span>→</span></a>
+                  <a href="#tech-concepts" class="btn-secondary"><span>See Concept Projects</span></a>
+                </div>
+              </div>
+              <div class="reveal-up delay-1">
+                ${renderAuraStayUI()}
+                <div class="font-mono" style="margin-top:0.75rem; font-size:0.625rem; letter-spacing:0.16em; color:var(--text-muted);">
+                  CONCEPT INTERFACE · AURASTAY OS INVENTORY DASHBOARD
+                </div>
+              </div>
+            </div>
+          </section>
+
+          ${buildMarquee(['Custom Business Software', 'Web Development', 'WhatsApp Automation', 'Business Digitisation'])}
+
+          <!-- WHAT WE BUILD -->
+          <section class="container section-pad">
+            <div class="reveal-up" style="margin-bottom:2.75rem;">
+              <div class="eyebrow"><span class="eyebrow-line"></span><span>WHAT WE BUILD</span></div>
+              <h2 class="display-lg">Four ways we make operations lighter.</h2>
+            </div>
+            <div class="grid-4">
+              ${[
+                { title: 'Custom Business Software', desc: 'CRM systems, operational dashboards, billing, inventory and workflow tools — shaped around how your team already works.' },
+                { title: 'Web Development', desc: 'Modern business websites, catalogues, landing pages and e-commerce platforms that load fast and convert visits into enquiries.' },
+                { title: 'Automation', desc: 'Lead routing, enquiry workflows, notifications, approved WhatsApp integrations and process automation that removes repetitive work.' },
+                { title: 'Business Digitisation', desc: 'Replacing manual registers and disconnected workflows with simple, manageable systems your staff will actually adopt.' }
+              ].map((w, i) => `
+                <div class="studio-card reveal-up delay-${i}" style="padding:1.85rem;">
+                  <span style="width:10px; height:10px; background:var(--accent-red); display:inline-block; border-radius:2px; margin-bottom:1.1rem;"></span>
+                  <h3 class="display-md" style="font-size:1.15rem; margin-bottom:0.65rem;">${w.title}</h3>
+                  <p style="color:var(--text-secondary); font-size:0.875rem;">${w.desc}</p>
+                </div>
+              `).join('')}
+            </div>
+          </section>
+
+          <!-- CONCEPT GALLERY -->
+          <section id="tech-concepts" class="section-pad border-t-subtle">
+            <div class="container">
+              <div class="reveal-up" style="max-width:680px; margin-bottom:3.5rem;">
+                <div class="eyebrow"><span class="eyebrow-line"></span><span>CONCEPT GALLERY</span></div>
+                <h2 class="display-lg">Systems shown honestly.</h2>
+                <p style="color:var(--text-secondary); margin-top:0.85rem;">
+                  These are portfolio concepts and in-house builds — not claimed client deployments. Each demonstrates how a real business problem would be solved, end to end.
+                </p>
+              </div>
+
+              <div style="display:flex; flex-direction:column; gap:4.5rem;">
+                ${PROJECTS.filter(p => p.kind === 'ui').slice(0, 4).map((sys, idx) => `
+                  <div class="grid-2 reveal-up" style="align-items:center; gap:2.5rem;">
+                    <div style="order:${idx % 2 === 1 ? 2 : 1};">${sys.renderUI()}</div>
+                    <div style="order:${idx % 2 === 1 ? 1 : 2};">
+                      <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.75rem;">
+                        <span class="font-mono" style="font-size:1.35rem; font-weight:700; color:var(--text-muted);">0${idx + 1}</span>
+                        <span class="font-mono" style="font-size:0.625rem; letter-spacing:0.15em; padding:0.2rem 0.55rem; border-radius:4px; background:rgba(225,29,46,0.14); color:var(--accent-light); border:1px solid rgba(225,29,46,0.3);">● ${sys.badge}</span>
+                      </div>
+                      <h3 class="display-lg" style="font-size:2rem; margin-bottom:0.35rem;">${sys.title}</h3>
+                      <div class="font-mono" style="font-size:0.65rem; letter-spacing:0.16em; color:var(--text-secondary); margin-bottom:1rem;">${sys.subtitle} · ${sys.industry}</div>
+                      <p style="color:var(--text-secondary); font-size:0.95rem; margin-bottom:1.25rem;">${sys.summary}</p>
+                      <ul style="list-style:none; display:flex; flex-direction:column; gap:0.55rem; margin-bottom:1.5rem;">
+                        ${sys.bullets.map(b => `<li style="display:flex; align-items:center; gap:0.6rem; font-size:0.875rem; color:#E4E4E7;"><span style="width:6px; height:6px; background:var(--accent-red);"></span><span>${b}</span></li>`).join('')}
+                      </ul>
+                      <button data-project-id="${sys.id}" class="project-trigger font-mono" style="font-size:0.7rem; letter-spacing:0.2em; color:#fff;">FULL CASE STUDY <span style="color:var(--accent-red);">↗</span></button>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </section>
+
+          <!-- UNDER THE HOOD -->
+          <section class="section-pad border-t-subtle">
+            <div class="container">
+              <div class="reveal-up" style="margin-bottom:2.5rem;">
+                <div class="eyebrow"><span class="eyebrow-line"></span><span>UNDER THE HOOD</span></div>
+                <h2 class="display-lg">A stack chosen for reliability, not fashion.</h2>
+              </div>
+              <div class="grid-4">
+                ${[
+                  { name: 'React', desc: 'Interfaces that feel instant' },
+                  { name: 'FastAPI', desc: 'Fast, documented backends' },
+                  { name: 'MongoDB', desc: 'Flexible operational data' },
+                  { name: 'Tailwind CSS', desc: 'Precise, consistent design' }
+                ].map((st, i) => `
+                  <div class="studio-card reveal-up delay-${i}" style="padding:1.75rem;">
+                    <h3 class="display-md" style="font-size:1.25rem; margin-bottom:0.4rem;">${st.name}</h3>
+                    <p style="color:var(--text-secondary); font-size:0.875rem;">${st.desc}</p>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </section>
+
+          ${buildBottomCTA()}
+        </div>
+      `,
+
+      'our-work': () => `
+        <div class="page-enter">
+          <section class="container section-pad" style="padding-bottom:2.5rem;">
+            <div class="reveal-up" style="max-width:740px;">
+              <div class="eyebrow"><span class="eyebrow-line"></span><span>OUR WORK</span></div>
+              <h1 class="display-xl" style="font-size:clamp(2.4rem, 5.2vw, 4.2rem);">Every project, honestly labelled.</h1>
+              <p style="color:var(--text-secondary); font-size:1.05rem; margin-top:1.15rem;">
+                Client work, in-house productions and concept systems — each marked exactly as it is. No invented logos, no borrowed case studies.
+              </p>
+            </div>
+            <div class="reveal-up delay-1" style="margin-top:2.25rem; display:flex; flex-wrap:wrap; gap:0.5rem;">
+              ${['ALL', 'VIDEO', 'PHOTOGRAPHY', 'DIGITAL MARKETING', 'WEB DEVELOPMENT', 'SOFTWARE', 'AUTOMATION'].map((cat, idx) => `
+                <button data-work-filter="${cat}" class="work-filter font-mono" style="padding:0.55rem 0.95rem; border-radius:6px; font-size:0.68rem; letter-spacing:0.15em; border:1px solid ${idx === 0 ? 'var(--accent-red)' : 'var(--border-subtle)'}; background:${idx === 0 ? 'var(--accent-red)' : '#141414'}; color:${idx === 0 ? '#fff' : 'var(--text-secondary)'};">${cat}</button>
+              `).join('')}
+            </div>
+          </section>
+
+          <section class="container" style="padding-bottom:6rem;">
+            <div id="all-work-grid" class="grid-3"></div>
+          </section>
+
+          ${buildMarquee(['Web Development', 'Software', 'Automation', 'Video', 'Photography', 'Digital Marketing'])}
+          ${buildBottomCTA()}
+        </div>
+      `,
+
+      about: () => `
+        <div class="page-enter">
+          <section class="container section-pad" style="padding-bottom:3.5rem;">
+            <div class="reveal-up" style="max-width:780px;">
+              <div class="eyebrow"><span class="eyebrow-line"></span><span>ABOUT THE STUDIO</span></div>
+              <h1 class="display-xl" style="font-size:clamp(2.4rem, 5.4vw, 4.3rem);">A Creative Mindset.<br/>A Technical Edge.</h1>
+              <p style="color:var(--text-secondary); font-size:1.05rem; margin-top:1.35rem;">
+                Parable Pixel Media is an early-stage agency built by two co-founders with complementary crafts — one behind the camera, one behind the code. Both are hands-on, on every project.
+              </p>
+            </div>
+          </section>
+
+          ${buildMarquee(['Founder-Led', 'Maharashtra Based', 'Creative + Technology', 'Honest Work'])}
+
+          <!-- CO-FOUNDERS -->
+          <section class="container section-pad">
+            <div class="reveal-up" style="margin-bottom:2.75rem;">
+              <div class="eyebrow"><span class="eyebrow-line"></span><span>THE FOUNDERS</span></div>
+              <h2 class="display-lg">Two crafts. One standard.</h2>
+            </div>
+
+            <div class="grid-2">
+              <div class="studio-card reveal-up" style="overflow:hidden;">
+                <div style="height:260px; border-bottom:1px solid var(--border-subtle);">${svgEditorialArt('portrait')}</div>
+                <div style="padding:2rem;">
+                  <div class="font-mono" style="font-size:0.65rem; letter-spacing:0.2em; color:var(--accent-light); margin-bottom:0.45rem;">CO-FOUNDER</div>
+                  <h3 class="display-md" style="margin-bottom:0.75rem;">Creative Direction</h3>
+                  <p style="color:var(--text-secondary); font-size:0.925rem; margin-bottom:1.35rem;">
+                    Leads video production, shooting, editing and creative direction. Obsessed with light, pacing and the frame that makes someone feel something.
+                  </p>
+                  <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
+                    ${['DIRECTION', 'CINEMATOGRAPHY', 'EDIT & GRADE'].map(t => `<span class="font-mono" style="font-size:0.625rem; letter-spacing:0.15em; padding:0.35rem 0.7rem; border-radius:4px; background:#1B1B1E; border:1px solid var(--border-strong); color:var(--text-secondary);">${t}</span>`).join('')}
+                  </div>
+                </div>
+              </div>
+
+              <div class="studio-card reveal-up delay-1" style="overflow:hidden;">
+                <div style="height:260px; border-bottom:1px solid var(--border-subtle);">${svgEditorialArt('portrait')}</div>
+                <div style="padding:2rem;">
+                  <div class="font-mono" style="font-size:0.65rem; letter-spacing:0.2em; color:var(--accent-light); margin-bottom:0.45rem;">&lt;/&gt; CO-FOUNDER</div>
+                  <h3 class="display-md" style="margin-bottom:0.75rem;">Technology &amp; Systems</h3>
+                  <p style="color:var(--text-secondary); font-size:0.925rem; margin-bottom:1.35rem;">
+                    Leads technical solutions: software development, websites and automation. Believes the best system is the one the team stops noticing.
+                  </p>
+                  <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
+                    ${['WEB DEVELOPMENT', 'SOFTWARE', 'AUTOMATION'].map(t => `<span class="font-mono" style="font-size:0.625rem; letter-spacing:0.15em; padding:0.35rem 0.7rem; border-radius:4px; background:#1B1B1E; border:1px solid var(--border-strong); color:var(--text-secondary);">${t}</span>`).join('')}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- PHILOSOPHY -->
+          <section class="section-pad border-t-subtle">
+            <div class="container grid-2" style="align-items:center;">
+              <div class="reveal-up">
+                <div class="eyebrow"><span class="eyebrow-line"></span><span>PHILOSOPHY</span></div>
+                <h2 class="display-lg" style="font-size:clamp(1.75rem, 3.2vw, 2.5rem);">
+                  Strong digital experiences should look exceptional and solve real problems.
+                </h2>
+                <p style="color:var(--text-secondary); margin-top:1.1rem; font-size:0.95rem;">
+                  A beautiful reel that brings no enquiries is decoration. A powerful system nobody opens is shelf-ware. We hold both truths at once — craft that earns attention, and engineering that earns its keep.
+                </p>
+              </div>
+              <div class="studio-card reveal-up delay-1" style="padding:2.5rem; border-left:3px solid var(--accent-red);">
+                <blockquote class="display-md" style="font-size:1.45rem; line-height:1.35;">
+                  "Where creativity meets technology" isn't a tagline. It's the org chart.
+                </blockquote>
+              </div>
+            </div>
+          </section>
+
+          <!-- THE KIT -->
+          <section class="section-pad border-t-subtle">
+            <div class="container">
+              <div class="reveal-up" style="margin-bottom:2.5rem;">
+                <div class="eyebrow"><span class="eyebrow-line"></span><span>THE KIT</span></div>
+                <h2 class="display-lg">Tools we trust.</h2>
+              </div>
+              <div class="grid-4 reveal-up">
+                ${[
+                  { cat: 'OPTICS', items: ['Sony Mirrorless', 'Cinema Lenses', 'Strobes & LEDs'] },
+                  { cat: 'POST', items: ['DaVinci Resolve', 'Lightroom', 'After Effects'] },
+                  { cat: 'BUILD', items: ['React', 'FastAPI', 'MongoDB'] },
+                  { cat: 'DESIGN', items: ['Figma', 'Tailwind CSS', 'Framer Motion'] }
+                ].map(col => `
+                  <div class="studio-card" style="padding:1.75rem;">
+                    <div class="font-mono" style="font-size:0.7rem; letter-spacing:0.2em; color:var(--accent-red); margin-bottom:1rem;">${col.cat}</div>
+                    <ul style="list-style:none; display:flex; flex-direction:column; gap:0.6rem; font-size:0.9rem; color:#E4E4E7;">
+                      ${col.items.map(i => `<li>${i}</li>`).join('')}
+                    </ul>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </section>
+
+          ${buildBottomCTA()}
+        </div>
+      `,
+
+      contact: () => `
+        <div class="page-enter">
+          <section class="container section-pad" style="padding-bottom:2.5rem;">
+            <div class="reveal-up" style="max-width:760px;">
+              <div class="eyebrow"><span class="eyebrow-line"></span><span>CONTACT</span></div>
+              <h1 class="display-xl" style="font-size:clamp(2.4rem, 5.4vw, 4.3rem);">Let's Build Something<br/>Meaningful.</h1>
+              <p style="color:var(--text-secondary); font-size:1.05rem; margin-top:1.15rem;">
+                Tell us what you're working on. Two lines is enough to start — we'll take it from there.
+              </p>
+            </div>
+          </section>
+
+          <section class="container" style="padding-bottom:6rem;">
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(310px, 1fr)); gap:2rem; align-items:start;">
+              <!-- Form -->
+              <form id="enquiry-form" class="studio-card reveal-up" style="padding:2.25rem; display:flex; flex-direction:column; gap:1.35rem;">
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1.25rem;">
+                  <div>
+                    <label class="form-label">YOUR NAME *</label>
+                    <input type="text" required placeholder="Your full name" class="form-input" />
+                  </div>
+                  <div>
+                    <label class="form-label">BUSINESS NAME (OPTIONAL)</label>
+                    <input type="text" placeholder="Your business or brand" class="form-input" />
+                  </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1.25rem;">
+                  <div>
+                    <label class="form-label">EMAIL *</label>
+                    <input type="email" required placeholder="you@business.com" class="form-input" />
+                  </div>
+                  <div>
+                    <label class="form-label">PHONE / WHATSAPP</label>
+                    <input type="tel" placeholder="+91" class="form-input" />
+                  </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1.25rem;">
+                  <div>
+                    <label class="form-label">SERVICE INTERESTED IN</label>
+                    <select class="form-input">
+                      <option value="">Select a service</option>
+                      <option>Creative Studio</option>
+                      <option>Digital Marketing</option>
+                      <option>Web Development</option>
+                      <option>Automation &amp; IT Solutions</option>
+                      <option>Full Brand + Tech Bundle</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="form-label">BUDGET RANGE (OPTIONAL)</label>
+                    <select class="form-input">
+                      <option>Prefer not to say</option>
+                      <option>Under ₹25,000</option>
+                      <option>₹25,000 – ₹75,000</option>
+                      <option>₹75,000 – ₹2,00,000</option>
+                      <option>₹2,00,000+</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="form-label">PROJECT DESCRIPTION *</label>
+                  <textarea rows="4" required placeholder="What are you building, selling or launching? What should change after this project?" class="form-input"></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary" style="width:100%;"><span>Send Enquiry</span><span>↗</span></button>
+              </form>
+
+              <!-- Direct Reach & Industries -->
+              <div style="display:flex; flex-direction:column; gap:1.5rem;">
+                <div class="studio-card reveal-up delay-1" style="padding:2.25rem; display:flex; flex-direction:column; gap:1.35rem;">
+                  <div class="font-mono" style="font-size:0.7rem; letter-spacing:0.2em; color:var(--text-secondary);">REACH US DIRECTLY</div>
+
+                  <div>
+                    <div class="font-mono" style="font-size:0.625rem; letter-spacing:0.18em; color:var(--text-muted); margin-bottom:0.25rem;">EMAIL</div>
+                    <a href="mailto:hello@parablepixel.in" style="font-weight:600; font-size:0.95rem;">hello@parablepixel.in</a>
+                  </div>
+
+                  <div>
+                    <div class="font-mono" style="font-size:0.625rem; letter-spacing:0.18em; color:var(--text-muted); margin-bottom:0.25rem;">PHONE / WHATSAPP</div>
+                    <a href="tel:+910000000000" style="font-weight:600; font-size:0.95rem;">+91 00000 00000</a>
+                  </div>
+
+                  <div>
+                    <div class="font-mono" style="font-size:0.625rem; letter-spacing:0.18em; color:var(--text-muted); margin-bottom:0.25rem;">LOCATION</div>
+                    <div style="font-weight:600; font-size:0.95rem;">Maharashtra, India</div>
+                  </div>
+                </div>
+
+                <div class="studio-card reveal-up delay-2" style="padding:2.25rem;">
+                  <div class="font-mono" style="font-size:0.7rem; letter-spacing:0.2em; color:var(--text-secondary); margin-bottom:1rem;">WHO WE WORK WITH</div>
+                  <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:1.1rem;">
+                    ${['RESTAURANTS & CAFÉS', 'HOTELS', 'RETAIL', 'REAL ESTATE', 'CLINICS', 'COACHING INSTITUTES', 'MANUFACTURERS', 'LOCAL BRANDS'].map(tag => `
+                      <span class="font-mono" style="font-size:0.625rem; letter-spacing:0.14em; padding:0.35rem 0.65rem; border-radius:4px; background:#1B1B1E; border:1px solid var(--border-strong); color:#E4E4E7;">${tag}</span>
+                    `).join('')}
+                  </div>
+                  <p style="color:var(--text-secondary); font-size:0.85rem;">
+                    Based in Maharashtra, working across Ambernath, Badlapur, Kalyan, Dombivli, Ulhasnagar — and remote anywhere.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          ${buildMarquee(['Book a Shoot', 'Plan a Website', 'Automate Operations', 'Grow Your Brand'])}
+        </div>
+      `
+    };
+
+    const STILLS_GALLERY = [
+      { cat: 'PRODUCT', title: 'Cinema Optics Macro', art: 'cafe' },
+      { cat: 'BUSINESS & LIFESTYLE', title: 'Espresso Extraction', art: 'cafe' },
+      { cat: 'SPACES', title: 'Concrete & Glass Facade', art: 'architecture' },
+      { cat: 'BUSINESS & LIFESTYLE', title: 'Creative Director Portrait', art: 'portrait' },
+      { cat: 'SPACES', title: 'Monochrome Towers', art: 'architecture' },
+      { cat: 'PRODUCT', title: 'Campaign Creative System', art: 'campaign' }
+    ];
+
+    // 7. ROUTER, FILTERING, MODAL & SCROLL REVEAL CONTROLLER
+    function renderHomeGrid(filter) {
+      const container = document.getElementById('home-featured-grid');
+      if (!container) return;
+      const items = filter === 'ALL' ? PROJECTS.slice(0, 6) : PROJECTS.filter(p => p.homeGroup === filter);
+      container.innerHTML = items.map(buildProjectCard).join('');
+      observeReveals();
+    }
+
+    function renderAllWorkGrid(filter) {
+      const container = document.getElementById('all-work-grid');
+      if (!container) return;
+      const items = filter === 'ALL' ? PROJECTS : PROJECTS.filter(p => p.workTags.includes(filter));
+      container.innerHTML = items.map(buildProjectCard).join('');
+      observeReveals();
+    }
+
+    function renderStillsGrid(filter) {
+      const container = document.getElementById('stills-grid');
+      if (!container) return;
+      const items = filter === 'ALL' ? STILLS_GALLERY : STILLS_GALLERY.filter(s => s.cat === filter);
+      container.innerHTML = items.map((s, idx) => `
+        <div class="studio-card reveal-up delay-${idx % 3}" style="overflow:hidden;">
+          <div style="height:230px; border-bottom:1px solid var(--border-subtle);">${svgEditorialArt(s.art)}</div>
+          <div style="padding:1.15rem 1.35rem;">
+            <div class="font-mono" style="font-size:0.6rem; letter-spacing:0.16em; color:var(--accent-light); margin-bottom:0.25rem;">${s.cat}</div>
+            <div style="font-weight:600; font-size:0.95rem;">${s.title}</div>
+          </div>
+        </div>
+      `).join('');
+      observeReveals();
+    }
+
+    function openCaseModal(id) {
+      const proj = PROJECTS.find(p => p.id === id);
+      if (!proj) return;
+      document.getElementById('modal-tag').textContent = proj.badge;
+      document.getElementById('modal-sector').textContent = proj.industry;
+      const mediaHTML = proj.kind === 'ui'
+        ? proj.renderUI()
+        : `<div style="height:260px; border-radius:8px; overflow:hidden; border:1px solid var(--border-strong);">${proj.renderArt()}</div>`;
+
+      document.getElementById('modal-content').innerHTML = `
+        <div style="margin-bottom:1.25rem;">
+          <div class="font-mono" style="font-size:0.65rem; letter-spacing:0.18em; color:var(--accent-light); margin-bottom:0.35rem;">${proj.subtitle}</div>
+          <h3 class="display-lg" style="font-size:1.85rem;">${proj.title}</h3>
+        </div>
+        <div style="margin-bottom:1.35rem;">${mediaHTML}</div>
+        <p style="color:var(--text-secondary); font-size:0.95rem; margin-bottom:1.35rem;">${proj.summary}</p>
+        <div style="padding-top:1.15rem; border-top:1px solid var(--border-subtle);">
+          <div class="font-mono" style="font-size:0.65rem; letter-spacing:0.18em; color:var(--text-muted); margin-bottom:0.85rem;">KEY DELIVERABLES &amp; SCOPE</div>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:0.75rem;">
+            ${proj.bullets.map(b => `<div style="display:flex; align-items:flex-start; gap:0.6rem; font-size:0.875rem;"><span style="width:6px; height:6px; background:var(--accent-red); margin-top:7px; flex-shrink:0;"></span><span>${b}</span></div>`).join('')}
+          </div>
+        </div>
+      `;
+      document.getElementById('case-modal').classList.add('open');
+    }
+
+    function closeCaseModal() {
+      document.getElementById('case-modal').classList.remove('open');
+    }
+
+    function observeReveals() {
+      const elements = document.querySelectorAll('.reveal-up');
+      if (!('IntersectionObserver' in window)) {
+        elements.forEach(el => el.classList.add('is-visible'));
+        return;
+      }
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08 });
+      elements.forEach(el => obs.observe(el));
+    }
+
+    function goToRoute(route) {
+      if (!PAGE_VIEWS[route]) route = 'home';
+      if (window.location.hash !== '#' + route) {
+        try { history.pushState(null, '', '#' + route); } catch (e) {}
+      }
+
+      const appRoot = document.getElementById('app-root');
+      appRoot.innerHTML = PAGE_VIEWS[route]();
+
+      document.querySelectorAll('.nav-item, .mobile-nav-item').forEach(link => {
+        link.classList.toggle('active', link.getAttribute('data-route') === route);
+      });
+
+      document.getElementById('mobile-drawer').classList.remove('open');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      if (route === 'home') renderHomeGrid('ALL');
+      if (route === 'our-work') renderAllWorkGrid('ALL');
+      if (route === 'creative-studio') renderStillsGrid('ALL');
+      if (route === 'contact') {
+        const form = document.getElementById('enquiry-form');
+        if (form) {
+          form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            form.reset();
+            const toast = document.getElementById('toast-banner');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 4200);
+          });
+        }
+      }
+      observeReveals();
+    }
+
+    // Global Click Delegation
+    document.addEventListener('click', (e) => {
+      const routeLink = e.target.closest('[data-route]');
+      if (routeLink) {
+        e.preventDefault();
+        closeCaseModal();
+        goToRoute(routeLink.getAttribute('data-route'));
+        return;
+      }
+
+      const projectCard = e.target.closest('.project-trigger');
+      if (projectCard) {
+        openCaseModal(projectCard.getAttribute('data-project-id'));
+        return;
+      }
+
+      const homeFilter = e.target.closest('.home-filter');
+      if (homeFilter) {
+        document.querySelectorAll('.home-filter').forEach(b => {
+          const active = b === homeFilter;
+          b.style.background = active ? 'var(--accent-red)' : 'transparent';
+          b.style.color = active ? '#fff' : 'var(--text-secondary)';
+        });
+        renderHomeGrid(homeFilter.getAttribute('data-home-filter'));
+        return;
+      }
+
+      const workFilter = e.target.closest('.work-filter');
+      if (workFilter) {
+        document.querySelectorAll('.work-filter').forEach(b => {
+          const active = b === workFilter;
+          b.style.background = active ? 'var(--accent-red)' : '#141414';
+          b.style.borderColor = active ? 'var(--accent-red)' : 'var(--border-subtle)';
+          b.style.color = active ? '#fff' : 'var(--text-secondary)';
+        });
+        renderAllWorkGrid(workFilter.getAttribute('data-work-filter'));
+        return;
+      }
+
+      const stillsFilter = e.target.closest('.stills-filter');
+      if (stillsFilter) {
+        document.querySelectorAll('.stills-filter').forEach(b => {
+          const active = b === stillsFilter;
+          b.style.background = active ? 'var(--accent-red)' : 'transparent';
+          b.style.color = active ? '#fff' : 'var(--text-secondary)';
+        });
+        renderStillsGrid(stillsFilter.getAttribute('data-stills-filter'));
+      }
+    });
+
+    document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+      document.getElementById('mobile-drawer').classList.toggle('open');
+    });
+    document.getElementById('modal-close').addEventListener('click', closeCaseModal);
+    document.getElementById('modal-close-secondary').addEventListener('click', closeCaseModal);
+    document.getElementById('case-modal').addEventListener('click', (e) => {
+      if (e.target.id === 'case-modal') closeCaseModal();
+    });
+    window.addEventListener('popstate', () => {
+      goToRoute(window.location.hash.replace('#', '') || 'home');
+    });
+
+    // Boot Immediately on DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', () => {
+      const startRoute = window.location.hash.replace('#', '') || 'home';
+      goToRoute(startRoute);
+    });
+  </script>
+</body>
+</html>
